@@ -1,0 +1,524 @@
+[gd_scene load_steps=10 format=3 uid="uid://b0g1dnraxs4p1"]
+
+[ext_resource type="Script" uid="uid://3wdx0aprs4jx" path="res://files.gd" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://yf8r832qo1kl" path="res://tree_test.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://chikp128ojfen" path="res://edit.gd" id="2_h2yge"]
+[ext_resource type="Script" uid="uid://cps273hc7ptnh" path="res://graph_edit.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://co2y3jhg5a1s5" path="res://set_check_button.gd" id="4_7mycd"]
+[ext_resource type="Texture2D" uid="uid://o3drrhoky4aq" path="res://icon.svg" id="5_lquwl"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lquwl"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_7mycd"]
+sky_material = SubResource("ProceduralSkyMaterial_lquwl")
+
+[sub_resource type="Environment" id="Environment_272bh"]
+background_mode = 2
+sky = SubResource("Sky_7mycd")
+tonemap_mode = 2
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuBar" type="MenuBar" parent="VBoxContainer"]
+layout_mode = 2
+flat = true
+
+[node name="Files" type="PopupMenu" parent="VBoxContainer/MenuBar"]
+script = ExtResource("1_0xm2m")
+
+[node name="ImportFileDialog" type="FileDialog" parent="VBoxContainer/MenuBar/Files"]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(686, 360)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.dma")
+
+[node name="Edit" type="PopupMenu" parent="VBoxContainer/MenuBar"]
+auto_translate_mode = 1
+script = ExtResource("2_h2yge")
+
+[node name="Debug" type="PopupMenu" parent="VBoxContainer/MenuBar"]
+auto_translate_mode = 1
+script = ExtResource("2_h2yge")
+
+[node name="Tools" type="PopupMenu" parent="VBoxContainer/MenuBar"]
+auto_translate_mode = 1
+script = ExtResource("2_h2yge")
+
+[node name="Help" type="PopupMenu" parent="VBoxContainer/MenuBar"]
+auto_translate_mode = 1
+script = ExtResource("2_h2yge")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MenuBar"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -365.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/MenuBar/HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+placeholder_text = "Enter Text"
+
+[node name="Button" type="Button" parent="VBoxContainer/MenuBar/HBoxContainer"]
+layout_mode = 2
+text = "Search"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+current_tab = 1
+
+[node name="Library" type="Tree" parent="VBoxContainer/HBoxContainer/TabContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+columns = 2
+script = ExtResource("1_ig7tw")
+metadata/_tab_index = 0
+
+[node name="Set" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/TabContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="SetA" type="CheckButton" parent="VBoxContainer/HBoxContainer/TabContainer/Set"]
+layout_mode = 2
+text = "SetA v0.0.1"
+script = ExtResource("4_7mycd")
+
+[node name="SetB" type="CheckButton" parent="VBoxContainer/HBoxContainer/TabContainer/Set"]
+layout_mode = 2
+text = "SetB v0.0.1"
+script = ExtResource("4_7mycd")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TabContainer2" type="TabContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="GraphEdit" type="GraphEdit" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+panning_scheme = 1
+right_disconnects = true
+show_zoom_label = true
+script = ExtResource("4_1bvp3")
+metadata/_tab_index = 0
+
+[node name="GraphNode" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/GraphEdit"]
+layout_mode = 0
+offset_left = 340.0
+offset_top = 120.0
+offset_right = 444.0
+offset_bottom = 243.0
+mouse_filter = 1
+position_offset = Vector2(340, 120)
+resizable = true
+title = "Some Graph"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/GraphEdit/GraphNode"]
+layout_mode = 2
+texture = ExtResource("5_lquwl")
+expand_mode = 5
+
+[node name="3DView" type="SubViewportContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2"]
+visible = false
+layout_mode = 2
+stretch = true
+metadata/_tab_index = 1
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView"]
+handle_input_locally = false
+size = Vector2i(2, 2)
+render_target_update_mode = 0
+
+[node name="Camera3D" type="Camera3D" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 3)
+current = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView/SubViewport"]
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.43647, 1.30145, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView/SubViewport"]
+environment = SubResource("Environment_272bh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView/SubViewport"]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Evolution" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/Evolution"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Evolution"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/Evolution"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/Evolution/HBoxContainer"]
+layout_mode = 2
+text = "Some Property Spectrum"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/Evolution/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="OptionButton" type="CheckButton" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/Evolution/HBoxContainer"]
+layout_mode = 2
+text = "Fixed"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/Evolution"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/Evolution/HBoxContainer2"]
+layout_mode = 2
+text = "Some Property Spectrum"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/Evolution/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="OptionButton" type="CheckButton" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/Evolution/HBoxContainer2"]
+layout_mode = 2
+text = "Fixed"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/Evolution"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/Evolution/HBoxContainer3"]
+layout_mode = 2
+text = "Some Property Spectrum"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/Evolution/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="OptionButton" type="CheckButton" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/Evolution/HBoxContainer3"]
+layout_mode = 2
+text = "Fixed"
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+current_tab = 1
+
+[node name="CodeEdit" type="CodeEdit" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Nodes" type="CenterContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes"]
+layout_mode = 2
+columns = 10
+
+[node name="GraphNode" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
+layout_mode = 2
+offset_right = 84.0
+offset_bottom = 105.0
+title = "test Node"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode"]
+layout_mode = 2
+texture = ExtResource("5_lquwl")
+expand_mode = 4
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode"]
+layout_mode = 2
+
+[node name="GraphNode4" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
+layout_mode = 2
+offset_left = 88.0
+offset_right = 172.0
+offset_bottom = 105.0
+title = "test Node"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode4"]
+layout_mode = 2
+texture = ExtResource("5_lquwl")
+expand_mode = 4
+
+[node name="GraphNode5" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
+layout_mode = 2
+offset_left = 176.0
+offset_right = 260.0
+offset_bottom = 105.0
+title = "test Node"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode5"]
+layout_mode = 2
+texture = ExtResource("5_lquwl")
+expand_mode = 4
+
+[node name="GraphNode6" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
+layout_mode = 2
+offset_left = 264.0
+offset_right = 348.0
+offset_bottom = 105.0
+title = "test Node"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode6"]
+layout_mode = 2
+texture = ExtResource("5_lquwl")
+expand_mode = 4
+
+[node name="GraphNode7" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
+layout_mode = 2
+offset_left = 352.0
+offset_right = 436.0
+offset_bottom = 105.0
+title = "test Node"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode7"]
+layout_mode = 2
+texture = ExtResource("5_lquwl")
+expand_mode = 4
+
+[node name="GraphNode8" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
+layout_mode = 2
+offset_left = 440.0
+offset_right = 524.0
+offset_bottom = 105.0
+title = "test Node"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode8"]
+layout_mode = 2
+texture = ExtResource("5_lquwl")
+expand_mode = 4
+
+[node name="GraphNode9" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
+layout_mode = 2
+offset_left = 528.0
+offset_right = 612.0
+offset_bottom = 105.0
+title = "test Node"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode9"]
+layout_mode = 2
+texture = ExtResource("5_lquwl")
+expand_mode = 4
+
+[node name="GraphNode10" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
+layout_mode = 2
+offset_left = 616.0
+offset_right = 700.0
+offset_bottom = 105.0
+title = "test Node"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode10"]
+layout_mode = 2
+texture = ExtResource("5_lquwl")
+expand_mode = 4
+
+[node name="GraphNode2" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
+layout_mode = 2
+offset_left = 704.0
+offset_right = 788.0
+offset_bottom = 105.0
+title = "test Node"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode2"]
+layout_mode = 2
+texture = ExtResource("5_lquwl")
+expand_mode = 4
+
+[node name="GraphNode3" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
+layout_mode = 2
+offset_left = 792.0
+offset_right = 876.0
+offset_bottom = 105.0
+title = "test Node"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode3"]
+layout_mode = 2
+texture = ExtResource("5_lquwl")
+expand_mode = 4
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Foot bar for status"
+
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "test"
+popup/item_0/id = 0
+popup/item_1/text = "test2"
+popup/item_1/id = 1
+
+[node name="DebugLabel" type="Label" parent="VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Debug Context"
+
+[connection signal="id_pressed" from="VBoxContainer/MenuBar/Files" to="VBoxContainer/MenuBar/Files" method="_on_id_pressed"]
+[connection signal="file_selected" from="VBoxContainer/MenuBar/Files/ImportFileDialog" to="VBoxContainer/MenuBar/Files" method="_on_import_file_dialog_file_selected"]
