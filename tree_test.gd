@@ -2,26 +2,46 @@ extends Tree
 
 @export var enabled_set:Array[String] = []
 
+const DMA_NODE = preload("res://dma_node.tscn")
+var set_stack = {}
+
 func _ready() -> void:
 	make_tree()
 
-func _process(delta: float) -> void:
-	pass
-
 func make_tree(enabled_set:Array[String]=["SetA"]):
-	var locomotion = create_item()
-	locomotion.set_text(0,"Locomotion")
-	locomotion.set_text(1,"Weight")
-	var locomotion_air = create_item(locomotion)
-	locomotion_air.set_text(0,"Air")
-	var locomotion_land = create_item(locomotion)
-	locomotion_land.set_text(0,"Land")
-	var locomotion_land_wheel = create_item(locomotion_land)
-	locomotion_land_wheel.set_text(0,"Wheel")
-	locomotion_land_wheel.set_text(1, "5kg")
-	var locomotion_sea = create_item(locomotion)
-	locomotion_sea.set_text(0,"Sea")
-	for _tree_item in locomotion.get_children():
-		#if _tree_item is TreeItem:
-			print(_tree_item)
-			#_tree_item.set_text(0,_tree_item.)
+	var parser = XMLParser.new()
+	var _tree_stack = []
+	for _set_file in enabled_set:
+		parser.open("res://library/set/%s.dmaset" % _set_file)
+	while parser.read() != ERR_FILE_EOF:
+		if parser.get_node_type() == XMLParser.NODE_ELEMENT:
+			if parser.get_node_name() == "connection":
+				set_stack[_tree_stack.back().get_text(0)].append(parser.get_attribute_value(0))
+				continue
+			var _tree_item = create_item(_tree_stack.back())
+			_tree_item.add_button(0,load("res://LibraryButton.tres"))
+			_tree_item.set_text(0, parser.get_attribute_value(0))
+			set_stack[parser.get_attribute_value(0)] = []
+			if parser.get_node_name() == "mech":
+				set_stack[_tree_stack.back().get_text(0)].append(parser.get_attribute_value(0))
+				_tree_stack.back().collapsed = true
+			_tree_stack.append(_tree_item)
+		if parser.get_node_type() == XMLParser.NODE_ELEMENT_END:
+			if parser.get_node_name() == "connection":
+				continue
+			_tree_stack.pop_back()
+
+func _on_button_clicked(item: TreeItem, column: int, id: int, mouse_button_index: int) -> void:
+	for _node in %Nodes.get_node("GridContainer").get_children():
+		_node.queue_free()
+	for _dma in set_stack[item.get_text(0)]:
+		var _node = DMA_NODE.instantiate()
+		_node.name = _dma
+		var connection_index = 1
+		for _connection in set_stack[_dma]:
+			var _connection_color = Color(randf(), randf(), randf())
+			_node.add_child(Control.new())
+			_node.set_slot(connection_index, true, connection_index, _connection_color, \
+				true, connection_index, _connection_color)
+			connection_index += 1
+		%Nodes.get_node("GridContainer").add_child(_node)

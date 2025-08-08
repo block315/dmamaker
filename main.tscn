@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b0g1dnraxs4p1"]
+[gd_scene load_steps=9 format=3 uid="uid://b0g1dnraxs4p1"]
 
 [ext_resource type="Script" uid="uid://3wdx0aprs4jx" path="res://files.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://yf8r832qo1kl" path="res://tree_test.gd" id="1_ig7tw"]
@@ -6,18 +6,8 @@
 [ext_resource type="Script" uid="uid://cps273hc7ptnh" path="res://graph_edit.gd" id="4_1bvp3"]
 [ext_resource type="Script" uid="uid://co2y3jhg5a1s5" path="res://set_check_button.gd" id="4_7mycd"]
 [ext_resource type="Texture2D" uid="uid://o3drrhoky4aq" path="res://icon.svg" id="5_lquwl"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lquwl"]
-sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-
-[sub_resource type="Sky" id="Sky_7mycd"]
-sky_material = SubResource("ProceduralSkyMaterial_lquwl")
-
-[sub_resource type="Environment" id="Environment_272bh"]
-background_mode = 2
-sky = SubResource("Sky_7mycd")
-tonemap_mode = 2
+[ext_resource type="Script" uid="uid://crr3j6pugy8ob" path="res://3d_view.gd" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://dxvgrui20eisx" path="res://testbed/empty.tscn" id="8_5vw27"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -95,19 +85,18 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.2
-current_tab = 1
+current_tab = 0
 
 [node name="Library" type="Tree" parent="VBoxContainer/HBoxContainer/TabContainer"]
 unique_name_in_owner = true
-visible = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-columns = 2
 script = ExtResource("1_ig7tw")
 metadata/_tab_index = 0
 
 [node name="Set" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/TabContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -130,7 +119,7 @@ layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
 
-[node name="GraphEdit" type="GraphEdit" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2"]
+[node name="GraphEdit" type="GraphEdit" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2" groups=["graph"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -170,6 +159,7 @@ expand_mode = 5
 visible = false
 layout_mode = 2
 stretch = true
+script = ExtResource("7_272bh")
 metadata/_tab_index = 1
 
 [node name="SubViewport" type="SubViewport" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView"]
@@ -183,15 +173,18 @@ current = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView/SubViewport"]
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.43647, 1.30145, 0)
+[node name="TestBed" type="Node3D" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView/SubViewport"]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView/SubViewport"]
-environment = SubResource("Environment_272bh")
+[node name="Empty" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView/SubViewport/TestBed" instance=ExtResource("8_5vw27")]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView/SubViewport"]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
-shadow_enabled = true
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView"]
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Empty"
+popup/item_0/id = 0
+popup/item_1/text = "Plane"
+popup/item_1/id = 1
 
 [node name="Evolution" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2"]
 visible = false
@@ -256,7 +249,7 @@ text = "Fixed"
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
-current_tab = 1
+current_tab = 2
 
 [node name="CodeEdit" type="CodeEdit" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer"]
 unique_name_in_owner = true
@@ -265,238 +258,18 @@ layout_mode = 2
 metadata/_tab_index = 0
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
 [node name="Nodes" type="CenterContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer"]
-visible = false
+unique_name_in_owner = true
 layout_mode = 2
 metadata/_tab_index = 2
 
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes"]
 layout_mode = 2
 columns = 10
-
-[node name="GraphNode" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
-layout_mode = 2
-offset_right = 84.0
-offset_bottom = 105.0
-title = "test Node"
-slot/0/left_enabled = true
-slot/0/left_type = 0
-slot/0/left_color = Color(1, 1, 1, 1)
-slot/0/left_icon = null
-slot/0/right_enabled = true
-slot/0/right_type = 0
-slot/0/right_color = Color(1, 1, 1, 1)
-slot/0/right_icon = null
-slot/0/draw_stylebox = true
-slot/1/left_enabled = false
-slot/1/left_type = 0
-slot/1/left_color = Color(1, 1, 1, 1)
-slot/1/left_icon = null
-slot/1/right_enabled = false
-slot/1/right_type = 0
-slot/1/right_color = Color(1, 1, 1, 1)
-slot/1/right_icon = null
-slot/1/draw_stylebox = true
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode"]
-layout_mode = 2
-texture = ExtResource("5_lquwl")
-expand_mode = 4
-
-[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode"]
-layout_mode = 2
-
-[node name="GraphNode4" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
-layout_mode = 2
-offset_left = 88.0
-offset_right = 172.0
-offset_bottom = 105.0
-title = "test Node"
-slot/0/left_enabled = true
-slot/0/left_type = 0
-slot/0/left_color = Color(1, 1, 1, 1)
-slot/0/left_icon = null
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color(1, 1, 1, 1)
-slot/0/right_icon = null
-slot/0/draw_stylebox = true
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode4"]
-layout_mode = 2
-texture = ExtResource("5_lquwl")
-expand_mode = 4
-
-[node name="GraphNode5" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
-layout_mode = 2
-offset_left = 176.0
-offset_right = 260.0
-offset_bottom = 105.0
-title = "test Node"
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color(1, 1, 1, 1)
-slot/0/left_icon = null
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color(1, 1, 1, 1)
-slot/0/right_icon = null
-slot/0/draw_stylebox = true
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode5"]
-layout_mode = 2
-texture = ExtResource("5_lquwl")
-expand_mode = 4
-
-[node name="GraphNode6" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
-layout_mode = 2
-offset_left = 264.0
-offset_right = 348.0
-offset_bottom = 105.0
-title = "test Node"
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color(1, 1, 1, 1)
-slot/0/left_icon = null
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color(1, 1, 1, 1)
-slot/0/right_icon = null
-slot/0/draw_stylebox = true
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode6"]
-layout_mode = 2
-texture = ExtResource("5_lquwl")
-expand_mode = 4
-
-[node name="GraphNode7" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
-layout_mode = 2
-offset_left = 352.0
-offset_right = 436.0
-offset_bottom = 105.0
-title = "test Node"
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color(1, 1, 1, 1)
-slot/0/left_icon = null
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color(1, 1, 1, 1)
-slot/0/right_icon = null
-slot/0/draw_stylebox = true
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode7"]
-layout_mode = 2
-texture = ExtResource("5_lquwl")
-expand_mode = 4
-
-[node name="GraphNode8" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
-layout_mode = 2
-offset_left = 440.0
-offset_right = 524.0
-offset_bottom = 105.0
-title = "test Node"
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color(1, 1, 1, 1)
-slot/0/left_icon = null
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color(1, 1, 1, 1)
-slot/0/right_icon = null
-slot/0/draw_stylebox = true
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode8"]
-layout_mode = 2
-texture = ExtResource("5_lquwl")
-expand_mode = 4
-
-[node name="GraphNode9" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
-layout_mode = 2
-offset_left = 528.0
-offset_right = 612.0
-offset_bottom = 105.0
-title = "test Node"
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color(1, 1, 1, 1)
-slot/0/left_icon = null
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color(1, 1, 1, 1)
-slot/0/right_icon = null
-slot/0/draw_stylebox = true
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode9"]
-layout_mode = 2
-texture = ExtResource("5_lquwl")
-expand_mode = 4
-
-[node name="GraphNode10" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
-layout_mode = 2
-offset_left = 616.0
-offset_right = 700.0
-offset_bottom = 105.0
-title = "test Node"
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color(1, 1, 1, 1)
-slot/0/left_icon = null
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color(1, 1, 1, 1)
-slot/0/right_icon = null
-slot/0/draw_stylebox = true
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode10"]
-layout_mode = 2
-texture = ExtResource("5_lquwl")
-expand_mode = 4
-
-[node name="GraphNode2" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
-layout_mode = 2
-offset_left = 704.0
-offset_right = 788.0
-offset_bottom = 105.0
-title = "test Node"
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color(1, 1, 1, 1)
-slot/0/left_icon = null
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color(1, 1, 1, 1)
-slot/0/right_icon = null
-slot/0/draw_stylebox = true
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode2"]
-layout_mode = 2
-texture = ExtResource("5_lquwl")
-expand_mode = 4
-
-[node name="GraphNode3" type="GraphNode" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer"]
-layout_mode = 2
-offset_left = 792.0
-offset_right = 876.0
-offset_bottom = 105.0
-title = "test Node"
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color(1, 1, 1, 1)
-slot/0/left_icon = null
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color(1, 1, 1, 1)
-slot/0/right_icon = null
-slot/0/draw_stylebox = true
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer/Nodes/GridContainer/GraphNode3"]
-layout_mode = 2
-texture = ExtResource("5_lquwl")
-expand_mode = 4
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -522,3 +295,9 @@ text = "Debug Context"
 
 [connection signal="id_pressed" from="VBoxContainer/MenuBar/Files" to="VBoxContainer/MenuBar/Files" method="_on_id_pressed"]
 [connection signal="file_selected" from="VBoxContainer/MenuBar/Files/ImportFileDialog" to="VBoxContainer/MenuBar/Files" method="_on_import_file_dialog_file_selected"]
+[connection signal="button_clicked" from="VBoxContainer/HBoxContainer/TabContainer/Library" to="VBoxContainer/HBoxContainer/TabContainer/Library" method="_on_button_clicked"]
+[connection signal="child_order_changed" from="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/GraphEdit" to="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView" method="_on_graph_edit_child_order_changed"]
+[connection signal="connection_request" from="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/GraphEdit" to="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/GraphEdit" method="_on_connection_request"]
+[connection signal="delete_nodes_request" from="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/GraphEdit" to="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/GraphEdit" method="_on_delete_nodes_request"]
+[connection signal="disconnection_request" from="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/GraphEdit" to="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/GraphEdit" method="_on_disconnection_request"]
+[connection signal="item_selected" from="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView/OptionButton" to="VBoxContainer/HBoxContainer/VBoxContainer/TabContainer2/3DView" method="_on_option_button_item_selected"]

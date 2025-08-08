@@ -10,4 +10,5 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5g1mi")
 
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="renamed" from="." to="." method="_on_renamed"]
