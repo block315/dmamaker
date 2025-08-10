@@ -33,7 +33,7 @@ func make_tree(enabled_set:Array[String]=["SetA"]):
 			_tree_stack.pop_back()
 
 func _on_button_clicked(item: TreeItem, column: int, id: int, mouse_button_index: int) -> void:
-	for _node in %Nodes.get_node("GridContainer").get_children():
+	for _node in %Nodes.get_children():
 		_node.queue_free()
 	for _dma in set_stack[item.get_text(0)]:
 		var _node = DMA_NODE.instantiate()
@@ -43,9 +43,9 @@ func _on_button_clicked(item: TreeItem, column: int, id: int, mouse_button_index
 			var _connection_color = Color(randf(), randf(), randf())
 			var _port = Label.new()
 			_port.text = _connection
-			_port.custom_minimum_size.y = 10
+			_port.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 			_node.add_child(_port)
 			_node.set_slot(connection_index, true, connection_index, _connection_color, \
 				true, connection_index, _connection_color)
 			connection_index += 1
-		%Nodes.get_node("GridContainer").add_child(_node)
+		%Nodes.add_child(_node)

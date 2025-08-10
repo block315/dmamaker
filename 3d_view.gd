@@ -1,4 +1,5 @@
 extends SubViewportContainer
+class_name View3D
 
 @onready var sub_viewport: SubViewport = $SubViewport
 @onready var camera_3d: Camera3D = $SubViewport/Camera3D
@@ -6,15 +7,14 @@ extends SubViewportContainer
 @onready var graph_edit: GraphEdit = %GraphEdit
 @onready var test_bed: Node3D = $SubViewport/TestBed
 
-func _ready() -> void:
-	pass # Replace with function body.
-
 func _process(delta: float) -> void:
 	if visible:
 		var camera_control = Input.get_vector("left", "right", "forward", "backward")
 		camera_3d.position += camera_sensitivity * Vector3(camera_control.x, Input.get_axis("down", "up"), camera_control.y)
 
 func _on_graph_edit_child_order_changed() -> void:
+	if sub_viewport == null:
+		return
 	for _visual in sub_viewport.get_children():
 		if _visual is CSGBox3D:
 			_visual.queue_free()
@@ -26,7 +26,6 @@ func _on_graph_edit_child_order_changed() -> void:
 			var _new_color = StandardMaterial3D.new()
 			_new_color.albedo_color = Color(randf(), randf(), randf(), randf())
 			_node_visiual.material_override = _new_color
-
 
 func _on_option_button_item_selected(index: int) -> void:
 	test_bed.get_child(0).queue_free()

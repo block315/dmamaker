@@ -5,6 +5,10 @@ class_name DMANode
 @onready var graph:GraphEdit = get_tree().get_first_node_in_group("graph")
 var mouse_selected: bool = false
 
+func _init() -> void:
+	var _label : Label = get_titlebar_hbox().get_child(0)
+	_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+
 func _ready() -> void:
 	renamed.connect(_on_renamed)
 	slot_updated.connect(_on_slot_updated)
@@ -39,17 +43,14 @@ func _on_renamed() -> void:
 	title = name
 
 func _on_slot_updated():
-	#print("preparing slots...", get_input_port_count())
 	for i in range(get_input_port_count()+1):
 		set_slot_enabled_left(i,true)
-		#print(i, "slot enabled")
 	for i in range(get_output_port_count()+1):
 		set_slot_enabled_right(i, true)
 
 func _on_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and get_parent() is GridContainer:
+	if event is InputEventMouseButton and get_parent() is FlowContainer:
 		if event.button_index == 1 and event.is_pressed():
 			var _new_node = duplicate()
 			_new_node.mouse_selected = true
 			get_tree().get_root().add_child(_new_node)
-			#_new_node.

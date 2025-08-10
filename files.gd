@@ -5,7 +5,6 @@ extends PopupMenu
 @onready var code_edit: CodeEdit = %CodeEdit
 @onready var debug_label: Label = %DebugLabel
 var file_access_web := FileAccessWeb.new()
-@export var file_dialog_importing := true
 
 func _ready() -> void:
 	add_item("New", 0, KEY_MASK_CTRL|KEY_N)
@@ -15,6 +14,8 @@ func _ready() -> void:
 
 func _on_id_pressed(id: int) -> void:
 	match id:
+		0:
+			get_tree().reload_current_scene()
 		1:
 			file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 			graph_edit.graph_flush()
@@ -36,6 +37,8 @@ func _on_id_pressed(id: int) -> void:
 				file_access_web.upload_cancelled.connect(_on_upload_cancelled)
 			else:
 				file_dialog.show()
+		3:
+			get_tree().quit()
 
 ## for Web Import
 func on_file_loaded(file_name: String, file_type: String, base64_data: String) -> void:

@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://b0g1dnraxs4p1"]
 
 [ext_resource type="Script" uid="uid://3wdx0aprs4jx" path="res://files.gd" id="1_0xm2m"]
-[ext_resource type="Script" uid="uid://yf8r832qo1kl" path="res://tree_test.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://yf8r832qo1kl" path="res://library_tab.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://chikp128ojfen" path="res://edit.gd" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://cps273hc7ptnh" path="res://graph_edit.gd" id="4_1bvp3"]
 [ext_resource type="Script" uid="uid://co2y3jhg5a1s5" path="res://set_check_button.gd" id="4_7mycd"]
@@ -265,13 +265,20 @@ metadata/_tab_index = 1
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="Nodes" type="CenterContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer/Nodes"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer/Nodes"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Nodes" type="FlowContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer/Nodes/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer/Nodes/Nodes"]
-layout_mode = 2
-columns = 10
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
