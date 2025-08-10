@@ -18,6 +18,7 @@ func _ready() -> void:
 	_texture.texture = texture
 	_texture.expand_mode = TextureRect.EXPAND_FIT_HEIGHT_PROPORTIONAL
 	add_child(_texture)
+	move_child(_texture, 0)
 
 func _process(delta: float) -> void:
 	if mouse_selected:

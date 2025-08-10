@@ -9,6 +9,7 @@ func _ready() -> void:
 	make_tree()
 
 func make_tree(enabled_set:Array[String]=["SetA"]):
+	clear()
 	var parser = XMLParser.new()
 	var _tree_stack = []
 	for _set_file in enabled_set:
@@ -40,7 +41,10 @@ func _on_button_clicked(item: TreeItem, column: int, id: int, mouse_button_index
 		var connection_index = 1
 		for _connection in set_stack[_dma]:
 			var _connection_color = Color(randf(), randf(), randf())
-			_node.add_child(Control.new())
+			var _port = Label.new()
+			_port.text = _connection
+			_port.custom_minimum_size.y = 10
+			_node.add_child(_port)
 			_node.set_slot(connection_index, true, connection_index, _connection_color, \
 				true, connection_index, _connection_color)
 			connection_index += 1
