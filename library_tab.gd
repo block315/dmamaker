@@ -1,4 +1,5 @@
 extends Tree
+class_name Library
 
 @export var enabled_set:Array[String] = []
 
@@ -13,7 +14,14 @@ func make_tree(enabled_set:Array[String]=["SetA"]):
 	var parser = XMLParser.new()
 	var _tree_stack = []
 	for _set_file in enabled_set:
-		parser.open("res://library/set/%s.dmaset" % _set_file)
+		if OS.get_name() == "Web":
+			parser.open_buffer(JavaScriptBridge.eval('
+				const xmlhttp = new XMLHttpRequest();
+				xmlhttp.open("GET", "/media/dmaset/%s.dmaset", false);
+				xmlhttp.send();
+				if (xmlhttp.status==200) {xmlhttp.response;}' % _set_file).to_utf8_buffer())
+		else:
+			parser.open("res://library/set/%s.dmaset" % _set_file)
 	while parser.read() != ERR_FILE_EOF:
 		if parser.get_node_type() == XMLParser.NODE_ELEMENT:
 			if parser.get_node_name() == "connection":
