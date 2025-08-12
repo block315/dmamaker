@@ -1,10 +1,12 @@
 extends PopupMenu
+class_name FileMenu
 
 @onready var file_dialog: FileDialog = $FileDialog
 @onready var graph_edit: GraphEdit = %GraphEdit
 @onready var code_edit: CodeEdit = %CodeEdit
 @onready var debug_label: Label = %DebugLabel
 var file_access_web := FileAccessWeb.new()
+@export var save_file_path_for_web: String = "/save_test.dma" 
 
 func _ready() -> void:
 	add_item("New", 0, KEY_MASK_CTRL|KEY_N)
@@ -30,17 +32,13 @@ func _on_id_pressed(id: int) -> void:
 		2:
 			file_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
 			if OS.get_name() == "Web":
-				file_access_web.loaded.connect(on_file_loaded)
-				file_access_web.error.connect(_on_error)
-				file_access_web.open(".dma")
-				file_access_web.progress.connect(_on_progress)
-				file_access_web.upload_cancelled.connect(_on_upload_cancelled)
+				JavaScriptBridge.download_buffer(graph_edit.save("", true), "test.dma", "application/xml")
 			else:
 				file_dialog.show()
 		3:
 			get_tree().quit()
 
-## for Web Import
+## for web import
 func on_file_loaded(file_name: String, file_type: String, base64_data: String) -> void:
 	print("Web Import working.")
 	var parser = XMLParser.new()
@@ -59,12 +57,15 @@ func _on_progress():
 func _on_upload_cancelled():
 	pass
 
+## make node graph from xml file
 func dma_parser(parser):
 	var _xml_stack = []
 	while parser.read() != ERR_FILE_EOF:
-		if parser.get_node_type() == XMLParser.NODE_ELEMENT and parser.get_node_name() == "mech":
+		if parser.get_node_type() == XMLParser.NODE_ELEMENT \
+		and parser.get_node_name() == "mech":
 			var _dma_node := DMANode.new()
 			var _name = parser.get_attribute_value(0)
+			_dma_node.resizable = true
 			if graph_edit.get_node_or_null(_name) != null:
 				_name += "*"
 			_dma_node.name = _name
@@ -73,15 +74,16 @@ func dma_parser(parser):
 				_dma_node.add_child(Control.new())
 				graph_edit.connect_node(_xml_stack.back(), 0, _name, 0)
 			_xml_stack.append(_name)
-		if parser.get_node_type() == XMLParser.NODE_ELEMENT_END and parser.get_node_name() == "mech":
+		if parser.get_node_type() == XMLParser.NODE_ELEMENT_END \
+		and parser.get_node_name() == "mech":
 			_xml_stack.pop_back()
 		graph_edit.arrange_nodes()
 
-## For desktop
+## for desktop import & export
 func _on_file_dialog_file_selected(path: String) -> void:
 	if file_dialog.file_mode == FileDialog.FILE_MODE_OPEN_FILE:
 		var parser = XMLParser.new()
 		parser.open(path)
 		dma_parser(parser)
 	elif file_dialog.file_mode == FileDialog.FILE_MODE_SAVE_FILE:
-		graph_edit.save(path)
+		graph_edit.save(path, false)

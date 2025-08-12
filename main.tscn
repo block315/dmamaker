@@ -39,6 +39,7 @@ size = Vector2i(686, 360)
 ok_button_text = "Open"
 dialog_hide_on_ok = true
 file_mode = 0
+access = 2
 filters = PackedStringArray("*.dma")
 
 [node name="Edit" type="PopupMenu" parent="VBoxContainer/MenuBar"]

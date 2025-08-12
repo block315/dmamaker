@@ -22,7 +22,7 @@ func _on_delete_nodes_request(nodes: Array[StringName]) -> void:
 		if _graph_node is GraphNode and _graph_node.name in nodes:
 			_graph_node.queue_free()
 
-func save(path):
+func save(path, on_buffer:bool=false):
 	var _xml_nodes = []
 	var xml_list = []
 	var xml_doc = XMLDocument.new()
@@ -46,7 +46,11 @@ func save(path):
 	for _xml_node in xml_list:
 		if _xml_node.attributes.has("name"):
 			_xml_node.attributes["name"] = _xml_node.attributes["name"].rstrip("*")
+	if on_buffer:
+		return XML.dump_buffer(xml_doc)
 	XML.dump_file(path, xml_doc)
+	return
+
 
 func xmldocuments_to_list(root:XMLNode, xml_list):
 	xml_list.append(root)
