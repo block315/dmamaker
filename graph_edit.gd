@@ -22,7 +22,7 @@ func _on_delete_nodes_request(nodes: Array[StringName]) -> void:
 		if _graph_node is GraphNode and _graph_node.name in nodes:
 			_graph_node.queue_free()
 
-func save(path, on_buffer:bool=false):
+func save(path: String = "") -> PackedByteArray:
 	var _xml_nodes = []
 	var xml_list = []
 	var xml_doc = XMLDocument.new()
@@ -35,22 +35,24 @@ func save(path, on_buffer:bool=false):
 		_xml_node.name = "mech"
 		_xml_node.attributes = {"name": _graph_node.name}
 		_xml_nodes.append(_xml_node)
-	xml_doc.root.children.append(_xml_nodes[0])
 	for _parent_xml_node in _xml_nodes:
 		for _connection in connections:
 			if _parent_xml_node.attributes["name"] == _connection["from_node"]:
 				for _child_xml_node in _xml_nodes:
 					if _child_xml_node.attributes["name"] == _connection["to_node"]:
 						_parent_xml_node.children.append(_child_xml_node)
+	for _root_xml_node in _xml_nodes:
+		var _has_parent := false
+		for _connection in connections:
+			if _root_xml_node.attributes["name"] == _connection["to_node"]:
+				_has_parent = true
+		if !_has_parent:
+			xml_doc.root.children.append(_root_xml_node)
 	xmldocuments_to_list(xml_doc.root, xml_list)
 	for _xml_node in xml_list:
 		if _xml_node.attributes.has("name"):
 			_xml_node.attributes["name"] = _xml_node.attributes["name"].rstrip("*")
-	if on_buffer:
-		return XML.dump_buffer(xml_doc)
-	XML.dump_file(path, xml_doc)
-	return
-
+	return '<?xml version="1.0" encoding="UTF-8"?>\n'.to_utf8_buffer() + XML.dump_buffer(xml_doc)
 
 func xmldocuments_to_list(root:XMLNode, xml_list):
 	xml_list.append(root)

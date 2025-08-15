@@ -32,7 +32,7 @@ func _on_id_pressed(id: int) -> void:
 		2:
 			file_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
 			if OS.get_name() == "Web":
-				JavaScriptBridge.download_buffer(graph_edit.save("", true), "test.dma", "application/xml")
+				JavaScriptBridge.download_buffer(graph_edit.save(), "test.dma", "application/xml")
 			else:
 				file_dialog.show()
 		3:
@@ -86,4 +86,5 @@ func _on_file_dialog_file_selected(path: String) -> void:
 		parser.open(path)
 		dma_parser(parser)
 	elif file_dialog.file_mode == FileDialog.FILE_MODE_SAVE_FILE:
-		graph_edit.save(path, false)
+		FileAccess.open(path, FileAccess.WRITE).store_string(graph_edit.save(path).get_string_from_utf8())
+	
