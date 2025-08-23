@@ -11,34 +11,38 @@ func _ready() -> void:
 
 func make_tree(enabled_set:Array[String]=["SetA"]):
 	clear()
+	if enabled_set.size() > 1:
+		var _root = create_item()
+		_root.set_text(0, "DMA sets")
 	var parser = XMLParser.new()
-	var _tree_stack = []
 	for _set_file in enabled_set:
 		if OS.get_name() == "Web":
 			parser.open_buffer(JavaScriptBridge.eval('
 				const xmlhttp = new XMLHttpRequest();
-				xmlhttp.open("GET", "/media/dmaset/%s.dmaset", false);
+				xmlhttp.open("GET", "/media/set/%s.dmaset", false);
 				xmlhttp.send();
 				if (xmlhttp.status==200) {xmlhttp.response;}' % _set_file).to_utf8_buffer())
 		else:
 			parser.open("res://library/set/%s.dmaset" % _set_file)
-	while parser.read() != ERR_FILE_EOF:
-		if parser.get_node_type() == XMLParser.NODE_ELEMENT:
-			if parser.get_node_name() == "connection":
-				set_stack[_tree_stack.back().get_text(0)].append(parser.get_attribute_value(0))
-				continue
-			var _tree_item = create_item(_tree_stack.back())
-			_tree_item.add_button(0,load("res://LibraryButton.tres"))
-			_tree_item.set_text(0, parser.get_attribute_value(0))
-			set_stack[parser.get_attribute_value(0)] = []
-			if parser.get_node_name() == "mech":
-				set_stack[_tree_stack.back().get_text(0)].append(parser.get_attribute_value(0))
-				_tree_stack.back().collapsed = true
-			_tree_stack.append(_tree_item)
-		if parser.get_node_type() == XMLParser.NODE_ELEMENT_END:
-			if parser.get_node_name() == "connection":
-				continue
-			_tree_stack.pop_back()
+		var _tree_stack = []
+		while parser.read() != ERR_FILE_EOF:
+			if parser.get_node_type() == XMLParser.NODE_ELEMENT:
+				if parser.get_node_name() == "connection":
+					set_stack[_tree_stack.back().get_text(0)].append(parser.get_attribute_value(0))
+					continue
+				var _tree_item = create_item(_tree_stack.back())
+				print(_set_file , _tree_stack)
+				_tree_item.add_button(0,load("res://LibraryButton.tres"))
+				_tree_item.set_text(0, parser.get_attribute_value(0))
+				set_stack[parser.get_attribute_value(0)] = []
+				if parser.get_node_name() == "mech":
+					set_stack[_tree_stack.back().get_text(0)].append(parser.get_attribute_value(0))
+					_tree_stack.back().collapsed = true
+				_tree_stack.append(_tree_item)
+			if parser.get_node_type() == XMLParser.NODE_ELEMENT_END:
+				if parser.get_node_name() == "connection":
+					continue
+				_tree_stack.pop_back()
 
 func _on_button_clicked(item: TreeItem, column: int, id: int, mouse_button_index: int) -> void:
 	for _node in %Nodes.get_children():

@@ -20,9 +20,15 @@ func _on_graph_edit_child_order_changed() -> void:
 			_visual.queue_free()
 	for _node in graph_edit.get_children():
 		if _node is GraphNode:
+			var _node_visiual_body = RigidBody3D.new()
+			_node_visiual_body.freeze = true
 			var _node_visiual = CSGBox3D.new()
-			sub_viewport.add_child(_node_visiual)
-			_node_visiual.position = Vector3(randi_range(-5,5), randi_range(-5,5), randi_range(-5,5))
+			test_bed.get_child(0).add_child(_node_visiual_body)
+			_node_visiual_body.position = Vector3(randi_range(-5,5), randi_range(-5,5), randi_range(-5,5))
+			var _node_visiual_body_coll = CollisionShape3D.new()
+			_node_visiual_body_coll.shape = BoxShape3D.new()
+			_node_visiual_body.add_child(_node_visiual_body_coll)
+			_node_visiual_body.add_child(_node_visiual)
 			var _new_color = StandardMaterial3D.new()
 			_new_color.albedo_color = Color(randf(), randf(), randf(), randf())
 			_node_visiual.material_override = _new_color
@@ -34,3 +40,4 @@ func _on_option_button_item_selected(index: int) -> void:
 			test_bed.add_child(preload("res://testbed/empty.tscn").instantiate())
 		1:
 			test_bed.add_child(preload("res://testbed/plane.tscn").instantiate())
+	test_bed.get_child(0)._ready()

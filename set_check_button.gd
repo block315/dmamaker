@@ -1,17 +1,19 @@
 extends CheckButton
 class_name SetCheckButton
 
+@onready var library = get_tree().get_first_node_in_group("library")
+
 func _ready() -> void:
-	toggled.connect(_on_state_changed)
+	toggled.connect(_on_state_changed) 
 
 func _process(delta: float) -> void:
 	pass
 
 func _on_state_changed(activate:bool):
 	if activate:
-		%Library.enabled_set.append(self.name)
-		print(%Library.enabled_set)
+		library.enabled_set.append(self.text)
+		print(library.enabled_set)
 	else:
-		%Library.enabled_set.erase(self.name)
-		print(%Library.enabled_set)
-	%Library.make_tree(%Library.enabled_set)
+		library.enabled_set.erase(self.text)
+		print(library.enabled_set)
+	library.make_tree(library.enabled_set)

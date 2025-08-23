@@ -42,8 +42,6 @@ func _on_id_pressed(id: int) -> void:
 func on_file_loaded(file_name: String, file_type: String, base64_data: String) -> void:
 	print("Web Import working.")
 	var parser = XMLParser.new()
-	debug_label.text += "File loaded"
-	debug_label.text += Marshalls.base64_to_utf8(base64_data)
 	parser.open_buffer(Marshalls.base64_to_raw(base64_data))
 	dma_parser(parser)
 
@@ -87,4 +85,3 @@ func _on_file_dialog_file_selected(path: String) -> void:
 		dma_parser(parser)
 	elif file_dialog.file_mode == FileDialog.FILE_MODE_SAVE_FILE:
 		FileAccess.open(path, FileAccess.WRITE).store_string(graph_edit.save(path).get_string_from_utf8())
-	
