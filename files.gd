@@ -63,9 +63,11 @@ func dma_parser(parser):
 		and parser.get_node_name() == "mech":
 			var _dma_node := DMANode.new()
 			var _name = parser.get_attribute_value(0)
+			var _index = parser.get_attribute_value(1)
 			_dma_node.resizable = true
 			if graph_edit.get_node_or_null(_name) != null:
-				_name += "*"
+				continue
+			_name += ("-" + _index)
 			_dma_node.name = _name
 			graph_edit.add_child(_dma_node)
 			if !_xml_stack.is_empty():

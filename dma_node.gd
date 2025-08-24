@@ -30,10 +30,7 @@ func _process(delta: float) -> void:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) \
 			and graph.get_rect().has_point(get_global_mouse_position()):
 			mouse_selected = false
-			print("graph edit click event")
-			for _node in graph.get_children():
-				if _node.name == name:
-					name += "*"
+			name += ("-" + str(graph.node_index))
 			reparent(graph)
 			position_offset = graph.get_local_mouse_position()
 		elif Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):

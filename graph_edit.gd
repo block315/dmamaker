@@ -1,5 +1,7 @@
 extends GraphEdit
 
+var node_index: int
+
 func _ready() -> void:
 	graph_flush()
 
@@ -12,10 +14,8 @@ func graph_flush():
 func _on_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	connect_node(from_node, from_port, to_node, to_port)
 
-
 func _on_disconnection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	disconnect_node(from_node, from_port, to_node, to_port)
-
 
 func _on_delete_nodes_request(nodes: Array[StringName]) -> void:
 	for _graph_node in get_children():
@@ -51,10 +51,15 @@ func save(path: String = "") -> PackedByteArray:
 	xmldocuments_to_list(xml_doc.root, xml_list)
 	for _xml_node in xml_list:
 		if _xml_node.attributes.has("name"):
-			_xml_node.attributes["name"] = _xml_node.attributes["name"].rstrip("*")
+			var _xml_node_index = _xml_node.attributes["name"].split("-")[1]
+			_xml_node.attributes["name"] = _xml_node.attributes["name"].split("-")[0]
+			_xml_node.attributes["index"] = _xml_node_index
 	return '<?xml version="1.0" encoding="UTF-8"?>\n'.to_utf8_buffer() + XML.dump_buffer(xml_doc)
 
 func xmldocuments_to_list(root:XMLNode, xml_list):
 	xml_list.append(root)
 	for _child_node in root.children:
 		xmldocuments_to_list(_child_node, xml_list)
+
+func _on_child_order_changed() -> void:
+	node_index = get_child_count()

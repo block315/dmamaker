@@ -15,8 +15,8 @@ func _process(delta: float) -> void:
 func _on_graph_edit_child_order_changed() -> void:
 	if sub_viewport == null:
 		return
-	for _visual in sub_viewport.get_children():
-		if _visual is CSGBox3D:
+	for _visual in test_bed.get_children():
+		if _visual is RigidBody3D:
 			_visual.queue_free()
 	for _node in graph_edit.get_children():
 		if _node is GraphNode:

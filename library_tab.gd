@@ -31,7 +31,6 @@ func make_tree(enabled_set:Array[String]=["SetA"]):
 					set_stack[_tree_stack.back().get_text(0)].append(parser.get_attribute_value(0))
 					continue
 				var _tree_item = create_item(_tree_stack.back())
-				print(_set_file , _tree_stack)
 				_tree_item.add_button(0,load("res://LibraryButton.tres"))
 				_tree_item.set_text(0, parser.get_attribute_value(0))
 				set_stack[parser.get_attribute_value(0)] = []
