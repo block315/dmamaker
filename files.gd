@@ -67,9 +67,12 @@ func dma_parser(parser):
 			_dma_node.resizable = true
 			if graph_edit.get_node_or_null(_name) != null:
 				continue
-			_name += ("-" + _index)
-			_dma_node.name = _name
-			graph_edit.add_child(_dma_node)
+			_name += (ProgramConfig.index_split_symbol + _index)
+			if !graph_edit.get_node(_name):
+				_dma_node.name = _name
+				graph_edit.add_child(_dma_node)
+			else:
+				_dma_node = graph_edit.get_node(_name)
 			if !_xml_stack.is_empty():
 				_dma_node.add_child(Control.new())
 				graph_edit.connect_node(_xml_stack.back(), 0, _name, 0)

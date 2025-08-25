@@ -14,7 +14,7 @@ func _ready() -> void:
 	slot_updated.connect(_on_slot_updated)
 	_on_renamed()
 	_on_slot_updated()
-	custom_minimum_size = Vector2(80,80)
+	custom_minimum_size = Vector2(100,100)
 	for _node_component in get_children():
 		if _node_component is TextureRect:
 			return
@@ -30,7 +30,7 @@ func _process(delta: float) -> void:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) \
 			and graph.get_rect().has_point(get_global_mouse_position()):
 			mouse_selected = false
-			name += ("-" + str(graph.node_index))
+			name += (ProgramConfig.index_split_symbol + str(graph.node_index))
 			reparent(graph)
 			position_offset = graph.get_local_mouse_position()
 		elif Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):

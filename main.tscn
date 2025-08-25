@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://b0g1dnraxs4p1"]
+[gd_scene load_steps=10 format=3 uid="uid://b0g1dnraxs4p1"]
 
 [ext_resource type="Script" uid="uid://3wdx0aprs4jx" path="res://files.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://yf8r832qo1kl" path="res://library_tab.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://chikp128ojfen" path="res://edit.gd" id="2_h2yge"]
+[ext_resource type="Script" uid="uid://d5psjmwmoiw7" path="res://main_config_tab.gd" id="3_kek77"]
 [ext_resource type="Script" uid="uid://cps273hc7ptnh" path="res://graph_edit.gd" id="4_1bvp3"]
 [ext_resource type="Script" uid="uid://nenqvje52g26" path="res://set_tab.gd" id="4_kek77"]
 [ext_resource type="Texture2D" uid="uid://o3drrhoky4aq" path="res://icon.svg" id="5_lquwl"]
@@ -51,6 +52,7 @@ mode = 2
 title = "Config"
 initial_position = 1
 size = Vector2i(500, 300)
+visible = true
 unresizable = false
 borderless = false
 always_on_top = true
@@ -62,34 +64,54 @@ offset_right = 496.0
 offset_bottom = 296.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 0
 
-[node name="Main" type="VBoxContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer"]
-visible = false
+[node name="Main" type="MarginContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer"]
 layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("3_kek77")
 metadata/_tab_index = 0
 
-[node name="CheckBox" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main"]
 layout_mode = 2
-text = "Tutorial"
 
-[node name="CheckBox2" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Index split symbol : "
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "-"
+max_length = 10
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
+layout_mode = 2
+text = "Tutorial Mode"
+
+[node name="CheckBox2" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
 layout_mode = 2
 text = "Auto save"
 
-[node name="CheckBox3" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main"]
+[node name="CheckBox3" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
 layout_mode = 2
 text = "fgasdfafds"
 
-[node name="CheckBox4" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main"]
+[node name="CheckBox4" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
 layout_mode = 2
 text = "asdfasdfasdf"
 
-[node name="CheckBox5" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main"]
+[node name="CheckBox5" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
 layout_mode = 2
 text = "asdfasdfasdf"
 
 [node name="Theme" type="VBoxContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -232,7 +254,7 @@ metadata/_tab_index = 1
 
 [node name="SubViewport" type="SubViewport" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView"]
 handle_input_locally = false
-size = Vector2i(955, 348)
+size = Vector2i(2, 2)
 render_target_update_mode = 0
 
 [node name="Camera3D" type="Camera3D" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/SubViewport"]
@@ -382,6 +404,7 @@ text = "Debug Context"
 [connection signal="id_pressed" from="VBoxContainer/MenuBar/Files" to="VBoxContainer/MenuBar/Files" method="_on_id_pressed"]
 [connection signal="file_selected" from="VBoxContainer/MenuBar/Files/FileDialog" to="VBoxContainer/MenuBar/Files" method="_on_file_dialog_file_selected"]
 [connection signal="id_pressed" from="VBoxContainer/MenuBar/Edit" to="VBoxContainer/MenuBar/Edit" method="_on_id_pressed"]
+[connection signal="text_changed" from="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer/HBoxContainer/LineEdit" to="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main" method="_on_line_edit_text_changed"]
 [connection signal="button_clicked" from="VBoxContainer/HSplitContainer/TabContainer/Library" to="VBoxContainer/HSplitContainer/TabContainer/Library" method="_on_button_clicked"]
 [connection signal="child_order_changed" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" method="_on_child_order_changed"]
 [connection signal="child_order_changed" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView" method="_on_graph_edit_child_order_changed"]

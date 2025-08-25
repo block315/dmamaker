@@ -50,9 +50,9 @@ func save(path: String = "") -> PackedByteArray:
 			xml_doc.root.children.append(_root_xml_node)
 	xmldocuments_to_list(xml_doc.root, xml_list)
 	for _xml_node in xml_list:
-		if _xml_node.attributes.has("name"):
-			var _xml_node_index = _xml_node.attributes["name"].split("-")[1]
-			_xml_node.attributes["name"] = _xml_node.attributes["name"].split("-")[0]
+		if _xml_node.attributes.has("name") and _xml_node.attributes["name"].contains(ProgramConfig.index_split_symbol):
+			var _xml_node_index = _xml_node.attributes["name"].split(ProgramConfig.index_split_symbol)[1]
+			_xml_node.attributes["name"] = _xml_node.attributes["name"].split(ProgramConfig.index_split_symbol)[0]
 			_xml_node.attributes["index"] = _xml_node_index
 	return '<?xml version="1.0" encoding="UTF-8"?>\n'.to_utf8_buffer() + XML.dump_buffer(xml_doc)
 
