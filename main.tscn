@@ -1,14 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://b0g1dnraxs4p1"]
+[gd_scene load_steps=13 format=3 uid="uid://b0g1dnraxs4p1"]
 
 [ext_resource type="Script" uid="uid://3wdx0aprs4jx" path="res://files.gd" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://0ymfoggx602w" path="res://main.gd" id="1_efxa6"]
 [ext_resource type="Script" uid="uid://yf8r832qo1kl" path="res://library_tab.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://chikp128ojfen" path="res://edit.gd" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://d5psjmwmoiw7" path="res://main_config_tab.gd" id="3_kek77"]
 [ext_resource type="Script" uid="uid://cps273hc7ptnh" path="res://graph_edit.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://bn64vqo3vhm85" path="res://theme_config_tab.gd" id="4_4c57u"]
 [ext_resource type="Script" uid="uid://nenqvje52g26" path="res://set_tab.gd" id="4_kek77"]
 [ext_resource type="Texture2D" uid="uid://o3drrhoky4aq" path="res://icon.svg" id="5_lquwl"]
 [ext_resource type="Script" uid="uid://crr3j6pugy8ob" path="res://3d_view.gd" id="7_272bh"]
 [ext_resource type="PackedScene" uid="uid://dxvgrui20eisx" path="res://testbed/empty.tscn" id="8_5vw27"]
+[ext_resource type="Script" uid="uid://bpub10sk4q3e4" path="res://right_click_popup_menu.gd" id="12_dg77c"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -17,6 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_efxa6")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -51,8 +55,7 @@ script = ExtResource("2_h2yge")
 mode = 2
 title = "Config"
 initial_position = 1
-size = Vector2i(500, 300)
-visible = true
+size = Vector2i(500, 396)
 unresizable = false
 borderless = false
 always_on_top = true
@@ -61,12 +64,13 @@ always_on_top = true
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 496.0
-offset_bottom = 296.0
+offset_bottom = 392.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 1
 
 [node name="Main" type="MarginContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -87,12 +91,18 @@ text = "Index split symbol : "
 
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "-"
+text = "#"
 max_length = 10
 
-[node name="CheckBox" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
 layout_mode = 2
-text = "Tutorial Mode"
+
+[node name="Label" type="Label" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Index split symbol : "
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
 
 [node name="CheckBox2" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
 layout_mode = 2
@@ -110,33 +120,85 @@ text = "asdfasdfasdf"
 layout_mode = 2
 text = "asdfasdfasdf"
 
-[node name="Theme" type="VBoxContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer"]
-visible = false
+[node name="Theme" type="MarginContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer"]
 layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("4_4c57u")
 metadata/_tab_index = 1
 
-[node name="CheckBox" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme"]
 layout_mode = 2
-text = "Dark mode"
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
 layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Dark Mode : "
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Main Color : "
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Main Color"
 edit_alpha = false
 
-[node name="CheckBox2" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Text Size : "
+
+[node name="FontHSlider" type="HSlider" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 10.0
+max_value = 50.0
+value = 15.0
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+text = "UI Scale : "
+
+[node name="UIHSlider" type="HSlider" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 2.0
+step = 0.01
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+text = "Dark mode"
+
+[node name="CheckBox2" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
 layout_mode = 2
 text = "asdfasdfasdf"
 
-[node name="CheckBox3" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme"]
+[node name="CheckBox3" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
 layout_mode = 2
 text = "asdfasdfasdf"
 
-[node name="CheckBox4" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme"]
+[node name="CheckBox4" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
 layout_mode = 2
 text = "asdfasdfasdf"
 
-[node name="CheckBox5" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme"]
+[node name="CheckBox5" type="CheckBox" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
 layout_mode = 2
 text = "asdfasdfasdf"
 
@@ -224,8 +286,8 @@ metadata/_tab_index = 0
 layout_mode = 0
 offset_left = 340.0
 offset_top = 120.0
-offset_right = 444.0
-offset_bottom = 243.0
+offset_right = 467.0
+offset_bottom = 271.0
 mouse_filter = 1
 position_offset = Vector2(340, 120)
 resizable = true
@@ -401,14 +463,25 @@ visible = false
 layout_mode = 2
 text = "Debug Context"
 
+[node name="PopupMenu" type="PopupMenu" parent="." groups=["rightclickmenu"]]
+system_menu_id = 5
+script = ExtResource("12_dg77c")
+
 [connection signal="id_pressed" from="VBoxContainer/MenuBar/Files" to="VBoxContainer/MenuBar/Files" method="_on_id_pressed"]
 [connection signal="file_selected" from="VBoxContainer/MenuBar/Files/FileDialog" to="VBoxContainer/MenuBar/Files" method="_on_file_dialog_file_selected"]
 [connection signal="id_pressed" from="VBoxContainer/MenuBar/Edit" to="VBoxContainer/MenuBar/Edit" method="_on_id_pressed"]
 [connection signal="text_changed" from="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer/HBoxContainer/LineEdit" to="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main" method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer2/CheckBox" to="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme" method="_on_check_box_pressed"]
+[connection signal="value_changed" from="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer4/FontHSlider" to="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme" method="_on_font_h_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer5/UIHSlider" to="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme" method="_on_uih_slider_value_changed"]
 [connection signal="button_clicked" from="VBoxContainer/HSplitContainer/TabContainer/Library" to="VBoxContainer/HSplitContainer/TabContainer/Library" method="_on_button_clicked"]
 [connection signal="child_order_changed" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" method="_on_child_order_changed"]
 [connection signal="child_order_changed" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView" method="_on_graph_edit_child_order_changed"]
 [connection signal="connection_request" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" method="_on_connection_request"]
 [connection signal="delete_nodes_request" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" method="_on_delete_nodes_request"]
 [connection signal="disconnection_request" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" method="_on_disconnection_request"]
+[connection signal="mouse_entered" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" method="_on_mouse_exited"]
 [connection signal="item_selected" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/HBoxContainer/OptionButton" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView" method="_on_option_button_item_selected"]
+[connection signal="about_to_popup" from="PopupMenu" to="PopupMenu" method="_on_about_to_popup"]
+[connection signal="close_requested" from="PopupMenu" to="PopupMenu" method="_on_close_requested"]

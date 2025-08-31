@@ -63,3 +63,10 @@ func xmldocuments_to_list(root:XMLNode, xml_list):
 
 func _on_child_order_changed() -> void:
 	node_index = get_child_count()
+
+func _on_mouse_exited() -> void:
+	get_tree().get_first_node_in_group("rightclickmenu").menu_to_make = []
+
+func _on_mouse_entered() -> void:
+	get_tree().get_first_node_in_group("rightclickmenu").menu_to_make = \
+	["Add Node", "Remove Node", "Delete Node"]
