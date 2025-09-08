@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b0g1dnraxs4p1"]
+[gd_scene load_steps=14 format=3 uid="uid://b0g1dnraxs4p1"]
 
 [ext_resource type="Script" uid="uid://3wdx0aprs4jx" path="res://files.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://0ymfoggx602w" path="res://main.gd" id="1_efxa6"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://o3drrhoky4aq" path="res://icon.svg" id="5_lquwl"]
 [ext_resource type="Script" uid="uid://crr3j6pugy8ob" path="res://3d_view.gd" id="7_272bh"]
 [ext_resource type="PackedScene" uid="uid://dxvgrui20eisx" path="res://testbed/empty.tscn" id="8_5vw27"]
+[ext_resource type="Script" uid="uid://chnb2o0eg1i0k" path="res://camera_3d.gd" id="11_ycdy4"]
 [ext_resource type="Script" uid="uid://bpub10sk4q3e4" path="res://right_click_popup_menu.gd" id="12_dg77c"]
 
 [node name="Main" type="Control"]
@@ -269,10 +270,11 @@ size_flags_horizontal = 3
 [node name="TabContainer2" type="TabContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 1
 
 [node name="GraphEdit" type="GraphEdit" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2" groups=["graph"]]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -308,7 +310,6 @@ texture = ExtResource("5_lquwl")
 expand_mode = 5
 
 [node name="3DView" type="SubViewportContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2"]
-visible = false
 layout_mode = 2
 stretch = true
 script = ExtResource("7_272bh")
@@ -316,12 +317,35 @@ metadata/_tab_index = 1
 
 [node name="SubViewport" type="SubViewport" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView"]
 handle_input_locally = false
-size = Vector2i(2, 2)
-render_target_update_mode = 0
+size = Vector2i(955, 350)
+render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 3)
 current = true
+script = ExtResource("11_ycdy4")
+
+[node name="RayCast3D" type="RayCast3D" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/SubViewport/Camera3D"]
+target_position = Vector3(0, 0, -50)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/SubViewport/Camera3D"]
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/SubViewport/Camera3D/CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.5
+offset_top = -2.5
+offset_right = 2.5
+offset_bottom = 2.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_filter = 2
+color = Color(1, 0, 0, 1)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/SubViewport"]
 
@@ -345,6 +369,10 @@ popup/item_1/id = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Physics"
+
+[node name="CheckButton" type="CheckButton" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/HBoxContainer"]
+layout_mode = 2
+text = "Draw"
 
 [node name="Evolution" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2"]
 visible = false
@@ -483,5 +511,6 @@ script = ExtResource("12_dg77c")
 [connection signal="mouse_entered" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" method="_on_mouse_exited"]
 [connection signal="item_selected" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/HBoxContainer/OptionButton" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView" method="_on_option_button_item_selected"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/HBoxContainer/CheckButton" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView" method="_on_check_button_pressed"]
 [connection signal="about_to_popup" from="PopupMenu" to="PopupMenu" method="_on_about_to_popup"]
 [connection signal="close_requested" from="PopupMenu" to="PopupMenu" method="_on_close_requested"]
