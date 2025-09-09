@@ -69,10 +69,12 @@ func make_parser_from_file(_set_file) -> XMLParser:
 
 func make_tree_item(_tree_stack, parser) -> TreeItem:
 	var _tree_item = create_item(_tree_stack.back())
-	var _tree_item_button = load("res://arts/kenney_game-icons/PNG/White/1x/cart.png")
-	_tree_item_button.get_image().resize(1,1)
+	var _tree_item_button = ImageTexture.new()
+	var _image = Image.new()
+	_tree_item_button.set_image(_image.load_from_file("res://arts/kenney_game-icons/PNG/White/1x/plus.png"))
+	_tree_item_button.set_size_override(Vector2i(20,20))
+	
 	_tree_item.add_button(0,_tree_item_button)
-	_tree_item.get_button(0,0).get_image().resize(5,5)
 	_tree_item.set_text(0, parser.get_attribute_value(0))
 	return _tree_item
 

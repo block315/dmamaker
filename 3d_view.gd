@@ -8,9 +8,10 @@ class_name View3D
 @export var draw_mode: bool = false
 @onready var graph_edit: GraphEdit = %GraphEdit
 @onready var test_bed: Node3D = $SubViewport/TestBed
+var control_focus := false
 
 func _process(delta: float) -> void:
-	if visible:
+	if visible and control_focus:
 		var camera_control = Input.get_vector("left", "right", "forward", "backward")
 		camera_3d.position += camera_sensitivity * Vector3(camera_control.x, Input.get_axis("down", "up"), camera_control.y)
 		if !draw_mode:
@@ -30,7 +31,7 @@ func _process(delta: float) -> void:
 func _on_graph_edit_child_order_changed() -> void:
 	if sub_viewport == null:
 		return
-	for _visual in test_bed.get_children():
+	for _visual in test_bed.get_child(0).get_children():
 		if _visual is RigidBody3D:
 			_visual.queue_free()
 	for _node in graph_edit.get_children():
@@ -64,7 +65,7 @@ func _on_check_button_pressed() -> void:
 			pass
 
 func _input(event) -> void:
-	if event is InputEventMouseMotion and !draw_mode:
+	if event is InputEventMouseMotion and !draw_mode and control_focus:
 		if Input.is_action_pressed("LC"):
 			camera_3d.rotate_y(-event.relative.x * 0.005)
 			camera_3d.rotate_x(-event.relative.y * 0.005)
@@ -72,3 +73,9 @@ func _input(event) -> void:
 	if event is InputEventMouseButton and !draw_mode:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.double_click:
 			camera_3d.rotation = Vector3.ZERO
+
+func _on_focus_entered() -> void:
+	control_focus = true
+
+func _on_focus_exited() -> void:
+	control_focus = false

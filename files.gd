@@ -10,9 +10,15 @@ var file_access_web := FileAccessWeb.new()
 
 func _ready() -> void:
 	add_item("New", 0, KEY_MASK_CTRL|KEY_N)
+	set_item_icon(0, load("res://arts/kenney_game-icons/PNG/White/1x/door.png"))
 	add_item("Import",1, KEY_MASK_CTRL|KEY_O)
+	set_item_icon(1, load("res://arts/kenney_game-icons/PNG/White/1x/import.png"))
 	add_item("Export",2, KEY_MASK_CTRL|KEY_S)
+	set_item_icon(2, load("res://arts/kenney_game-icons/PNG/White/1x/save.png"))
 	add_item("Exit",3, KEY_MASK_CTRL|KEY_Q)
+	set_item_icon(3, load("res://arts/kenney_game-icons/PNG/White/1x/cross.png"))
+	for i in range(item_count):
+		set_item_icon_max_width(i, ProgramConfig.icon_size)
 
 func _on_id_pressed(id: int) -> void:
 	match id:

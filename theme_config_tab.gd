@@ -1,12 +1,11 @@
 extends MarginContainer
 
 var MAIN_THEME :Theme = preload("res://main_theme.tres")
+@onready var color_picker_button: ColorPickerButton = $VBoxContainer/HBoxContainer3/ColorPickerButton
 
 func _ready() -> void:
-	pass # Replace with function body.
+	color_picker_button.get_popup().always_on_top = true
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
@@ -18,3 +17,6 @@ func _on_font_h_slider_value_changed(value: float) -> void:
 
 func _on_uih_slider_value_changed(value: float) -> void:
 	MAIN_THEME.default_base_scale = value
+
+func _on_h_slider_value_changed(value: float) -> void:
+	ProgramConfig.icon_size = value

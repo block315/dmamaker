@@ -57,6 +57,7 @@ mode = 2
 title = "Config"
 initial_position = 1
 size = Vector2i(500, 396)
+visible = true
 unresizable = false
 borderless = false
 always_on_top = true
@@ -169,6 +170,20 @@ size_flags_horizontal = 3
 min_value = 10.0
 max_value = 50.0
 value = 15.0
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+text = "Icon Size : "
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 5.0
+max_value = 50.0
+value = 20.0
 
 [node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
 layout_mode = 2
@@ -347,8 +362,6 @@ size_flags_vertical = 6
 mouse_filter = 2
 color = Color(1, 0, 0, 1)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/SubViewport"]
-
 [node name="TestBed" type="Node3D" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/SubViewport"]
 
 [node name="Empty" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/SubViewport/TestBed" instance=ExtResource("8_5vw27")]
@@ -501,6 +514,7 @@ script = ExtResource("12_dg77c")
 [connection signal="text_changed" from="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer/HBoxContainer/LineEdit" to="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Main" method="_on_line_edit_text_changed"]
 [connection signal="pressed" from="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer2/CheckBox" to="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme" method="_on_check_box_pressed"]
 [connection signal="value_changed" from="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer4/FontHSlider" to="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme" method="_on_font_h_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer6/HSlider" to="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme" method="_on_h_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer5/UIHSlider" to="VBoxContainer/MenuBar/Edit/ConfigPopupPanel/TabContainer/Theme" method="_on_uih_slider_value_changed"]
 [connection signal="button_clicked" from="VBoxContainer/HSplitContainer/TabContainer/Library" to="VBoxContainer/HSplitContainer/TabContainer/Library" method="_on_button_clicked"]
 [connection signal="child_order_changed" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" method="_on_child_order_changed"]
@@ -510,6 +524,8 @@ script = ExtResource("12_dg77c")
 [connection signal="disconnection_request" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" method="_on_disconnection_request"]
 [connection signal="mouse_entered" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/GraphEdit" method="_on_mouse_exited"]
+[connection signal="focus_entered" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView" method="_on_focus_entered"]
+[connection signal="focus_exited" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView" method="_on_focus_exited"]
 [connection signal="item_selected" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/HBoxContainer/OptionButton" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView" method="_on_option_button_item_selected"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView/HBoxContainer/CheckButton" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2/3DView" method="_on_check_button_pressed"]
 [connection signal="about_to_popup" from="PopupMenu" to="PopupMenu" method="_on_about_to_popup"]
