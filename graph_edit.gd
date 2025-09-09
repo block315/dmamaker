@@ -23,11 +23,13 @@ func _on_delete_nodes_request(nodes: Array[StringName]) -> void:
 			_graph_node.queue_free()
 
 func save(path: String = "") -> PackedByteArray:
-	var _xml_nodes = []
-	var xml_list = []
+	var _xml_nodes = [] # XMLNode
+	var _graph_nodes = [] # GraphNode
+	var xml_list = [] # all xml data in xml file
 	var xml_doc = XMLDocument.new()
+
 	xml_doc.root = XMLNode.new()
-	xml_doc.root.name = "robot"
+	xml_doc.root.name = "dma"
 	for _graph_node in get_children():
 		if _graph_node is not GraphNode:
 			continue
@@ -35,11 +37,20 @@ func save(path: String = "") -> PackedByteArray:
 		_xml_node.name = "mech"
 		_xml_node.attributes = {"name": _graph_node.name}
 		_xml_nodes.append(_xml_node)
+		_graph_nodes.append(_graph_node)
+	
 	for _parent_xml_node in _xml_nodes:
 		for _connection in connections:
 			if _parent_xml_node.attributes["name"] == _connection["from_node"]:
 				for _child_xml_node in _xml_nodes:
 					if _child_xml_node.attributes["name"] == _connection["to_node"]:
+						for _parent_graph_node in _graph_nodes:
+							if _parent_graph_node.name == _parent_xml_node.attributes["name"]:
+								var _port_control_node = _parent_graph_node.get_child(_connection["from_port"])
+								if _port_control_node is Label:
+									_child_xml_node.attributes["connection"] = _port_control_node.text
+								else:
+									_child_xml_node.attributes["connection"] = "default"
 						_parent_xml_node.children.append(_child_xml_node)
 	for _root_xml_node in _xml_nodes:
 		var _has_parent := false

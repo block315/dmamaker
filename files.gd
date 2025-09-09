@@ -40,13 +40,11 @@ func _on_id_pressed(id: int) -> void:
 
 ## for web import
 func on_file_loaded(file_name: String, file_type: String, base64_data: String) -> void:
-	print("Web Import working.")
 	var parser = XMLParser.new()
 	parser.open_buffer(Marshalls.base64_to_raw(base64_data))
 	dma_parser(parser)
 
 func _on_error() -> void:
-	print("error")
 	debug_label.text += "Error"
 
 func _on_progress():
@@ -56,14 +54,15 @@ func _on_upload_cancelled():
 	pass
 
 ## make node graph from xml file
-func dma_parser(parser):
+func dma_parser(parser: XMLParser):
 	var _xml_stack = []
 	while parser.read() != ERR_FILE_EOF:
 		if parser.get_node_type() == XMLParser.NODE_ELEMENT \
 		and parser.get_node_name() == "mech":
 			var _dma_node := DMANode.new()
-			var _name = parser.get_attribute_value(0)
-			var _index = parser.get_attribute_value(1)
+			var _name = parser.get_named_attribute_value("name")
+			var _index = parser.get_named_attribute_value("index")
+			var _connection = parser.get_named_attribute_value("connection")
 			_dma_node.resizable = true
 			if graph_edit.get_node_or_null(_name) != null:
 				continue
@@ -78,7 +77,7 @@ func dma_parser(parser):
 				graph_edit.connect_node(_xml_stack.back(), 0, _name, 0)
 			_xml_stack.append(_name)
 		if parser.get_node_type() == XMLParser.NODE_ELEMENT_END \
-		and parser.get_node_name() == "mech":
+			and parser.get_node_name() == "mech":
 			_xml_stack.pop_back()
 		graph_edit.arrange_nodes()
 

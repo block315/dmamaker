@@ -45,7 +45,7 @@ func _on_button_clicked(item: TreeItem, column: int, id: int, mouse_button_index
 			var connection_type = int(_connection[1])
 			var _connection_color = Color8(rand_from_seed(connection_type)[0]%256, \
 rand_from_seed(connection_type)[0]/1000000%256,rand_from_seed(connection_type)[0]/1000%256)
-			print("adding port color ", _connection_color)
+			#print("adding port color ", _connection_color)
 			var _port = Label.new()
 			_port.text = _connection[0]
 			_port.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
