@@ -13,7 +13,7 @@ var control_focus := false
 func _process(delta: float) -> void:
 	if visible and control_focus:
 		var camera_control = Input.get_vector("left", "right", "forward", "backward")
-		camera_3d.position += camera_sensitivity * Vector3(camera_control.x, Input.get_axis("down", "up"), camera_control.y)
+		camera_3d.position += camera_3d.global_basis * camera_sensitivity * Vector3(camera_control.x, Input.get_axis("down", "up"), camera_control.y)
 		if !draw_mode:
 			pass
 		if draw_mode and Input.is_action_just_pressed("LC"):
@@ -32,8 +32,8 @@ func _on_graph_edit_child_order_changed() -> void:
 	if sub_viewport == null:
 		return
 	for _visual in test_bed.get_child(0).get_children():
-		if _visual is RigidBody3D:
-			_visual.queue_free()
+			if _visual is RigidBody3D:
+				_visual.queue_free()
 	for _node in graph_edit.get_children():
 		if _node is GraphNode:
 			var _node_visiual_body = RigidBody3D.new()

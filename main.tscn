@@ -324,7 +324,7 @@ layout_mode = 2
 texture = ExtResource("5_lquwl")
 expand_mode = 5
 
-[node name="3DView" type="SubViewportContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2"]
+[node name="3DView" type="SubViewportContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2" groups=["view3d"]]
 layout_mode = 2
 stretch = true
 script = ExtResource("7_272bh")
