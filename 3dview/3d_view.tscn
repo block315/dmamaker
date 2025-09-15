@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=3 uid="uid://emlvgmc8so3a"]
+
+[ext_resource type="Script" uid="uid://crr3j6pugy8ob" path="res://3d_view.gd" id="1_ehtsb"]
+[ext_resource type="Script" uid="uid://chnb2o0eg1i0k" path="res://camera_3d.gd" id="2_j26tx"]
+[ext_resource type="PackedScene" uid="uid://dxvgrui20eisx" path="res://testbed/empty.tscn" id="3_dmwj8"]
+
+[node name="3DView" type="SubViewportContainer"]
+stretch = true
+script = ExtResource("1_ehtsb")
+metadata/_tab_index = 1
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(2, 2)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 3)
+current = true
+script = ExtResource("2_j26tx")
+
+[node name="RayCast3D" type="RayCast3D" parent="SubViewport/Camera3D"]
+target_position = Vector3(0, 0, -50)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="SubViewport/Camera3D"]
+
+[node name="ColorRect" type="ColorRect" parent="SubViewport/Camera3D/CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.5
+offset_top = -2.5
+offset_right = 2.5
+offset_bottom = 2.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_filter = 2
+color = Color(1, 0, 0, 1)
+
+[node name="TestBed" type="Node3D" parent="SubViewport"]
+
+[node name="Empty" parent="SubViewport/TestBed" instance=ExtResource("3_dmwj8")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="HBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Empty"
+popup/item_0/id = 0
+popup/item_1/text = "Plane"
+popup/item_1/id = 1
+
+[node name="PhysicsCheckButton" type="CheckButton" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Physics"
+
+[node name="CheckButton" type="CheckButton" parent="HBoxContainer"]
+layout_mode = 2
+text = "Draw"
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="item_selected" from="HBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="HBoxContainer/CheckButton" to="." method="_on_check_button_pressed"]

@@ -1,6 +1,10 @@
 extends GraphEdit
 
 var node_index: int
+var thumbnail: bool = true :
+	set(value):
+		node_thumbnail(value)
+		thumbnail = value
 
 func _ready() -> void:
 	graph_flush()
@@ -10,6 +14,19 @@ func graph_flush():
 		for _graph_node in get_children():
 			if _graph_node is GraphNode:
 				_graph_node.queue_free()
+
+func node_thumbnail(thumbnail:bool):
+	if get_child_count() > 0:
+		for _graph_node in get_children():
+			if _graph_node is DMANode:
+				for _node_component in _graph_node.get_children():
+					if _node_component is TextureRect:
+						if thumbnail:
+							_node_component.scale.y = 1
+							_graph_node.reset_size()
+						else:
+							_node_component.scale.y = 0
+							_graph_node.reset_size()
 
 func _on_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	connect_node(from_node, from_port, to_node, to_port)
@@ -73,11 +90,4 @@ func xmldocuments_to_list(root:XMLNode, xml_list):
 		xmldocuments_to_list(_child_node, xml_list)
 
 func _on_child_order_changed() -> void:
-	node_index = get_child_count()
-
-func _on_mouse_exited() -> void:
-	get_tree().get_first_node_in_group("rightclickmenu").menu_to_make = []
-
-func _on_mouse_entered() -> void:
-	get_tree().get_first_node_in_group("rightclickmenu").menu_to_make = \
-	["Add Node", "Remove Node", "Delete Node"]
+	node_index = get_child_count() - 1

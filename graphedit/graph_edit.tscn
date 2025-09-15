@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpvyp4owh3eqr"]
+
+[ext_resource type="Script" uid="uid://cps273hc7ptnh" path="res://graph_edit.gd" id="1_n4gte"]
+[ext_resource type="Script" uid="uid://bi1oqgucrms8i" path="res://graphedit/right_click_popup_menu.gd" id="3_n65k6"]
+
+[node name="GraphEdit" type="GraphEdit" groups=["graph"]]
+visible = false
+size_flags_horizontal = 3
+size_flags_vertical = 3
+panning_scheme = 1
+right_disconnects = true
+show_zoom_label = true
+script = ExtResource("1_n4gte")
+metadata/_tab_index = 0
+
+[node name="RightClickPopupMenu" type="PopupMenu" parent="."]
+always_on_top = true
+system_menu_id = 5
+script = ExtResource("3_n65k6")
+
+[connection signal="child_order_changed" from="." to="." method="_on_child_order_changed"]
+[connection signal="connection_request" from="." to="." method="_on_connection_request"]
+[connection signal="delete_nodes_request" from="." to="." method="_on_delete_nodes_request"]
+[connection signal="disconnection_request" from="." to="." method="_on_disconnection_request"]
+[connection signal="gui_input" from="." to="RightClickPopupMenu" method="_on_graph_edit_gui_input"]
+[connection signal="node_deselected" from="." to="RightClickPopupMenu" method="_on_graph_edit_node_deselected"]
+[connection signal="node_selected" from="." to="RightClickPopupMenu" method="_on_graph_edit_node_selected"]
+[connection signal="id_pressed" from="RightClickPopupMenu" to="RightClickPopupMenu" method="_on_id_pressed"]
+[connection signal="visibility_changed" from="RightClickPopupMenu" to="RightClickPopupMenu" method="_on_visibility_changed"]

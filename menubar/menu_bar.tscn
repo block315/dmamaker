@@ -1,0 +1,239 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfsrws2u2qkwy"]
+
+[ext_resource type="Script" uid="uid://3wdx0aprs4jx" path="res://files.gd" id="1_5jewf"]
+[ext_resource type="Script" uid="uid://chikp128ojfen" path="res://edit.gd" id="2_qa3nb"]
+[ext_resource type="Script" uid="uid://d5psjmwmoiw7" path="res://main_config_tab.gd" id="3_wms42"]
+[ext_resource type="Script" uid="uid://bn64vqo3vhm85" path="res://theme_config_tab.gd" id="4_gr74j"]
+
+[node name="MenuBar" type="MenuBar"]
+flat = true
+
+[node name="Files" type="PopupMenu" parent="."]
+auto_translate_mode = 1
+script = ExtResource("1_5jewf")
+
+[node name="FileDialog" type="FileDialog" parent="Files"]
+auto_translate_mode = 1
+title = "Open a File"
+initial_position = 2
+size = Vector2i(686, 360)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.dma")
+
+[node name="Edit" type="PopupMenu" parent="."]
+auto_translate_mode = 1
+script = ExtResource("2_qa3nb")
+
+[node name="ConfigPopupPanel" type="PopupPanel" parent="Edit"]
+auto_translate_mode = 1
+mode = 2
+title = "Config"
+initial_position = 1
+size = Vector2i(500, 396)
+unresizable = false
+borderless = false
+always_on_top = true
+
+[node name="TabContainer" type="TabContainer" parent="Edit/ConfigPopupPanel"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 496.0
+offset_bottom = 392.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+current_tab = 1
+
+[node name="Main" type="MarginContainer" parent="Edit/ConfigPopupPanel/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("3_wms42")
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Edit/ConfigPopupPanel/TabContainer/Main"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Index split symbol : "
+
+[node name="LineEdit" type="LineEdit" parent="Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "#"
+max_length = 10
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Index split symbol : "
+
+[node name="CheckBox" type="CheckBox" parent="Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="CheckBox2" type="CheckBox" parent="Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
+layout_mode = 2
+text = "Auto save"
+
+[node name="CheckBox3" type="CheckBox" parent="Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
+layout_mode = 2
+text = "fgasdfafds"
+
+[node name="CheckBox4" type="CheckBox" parent="Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
+layout_mode = 2
+text = "asdfasdfasdf"
+
+[node name="CheckBox5" type="CheckBox" parent="Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer"]
+layout_mode = 2
+text = "asdfasdfasdf"
+
+[node name="Theme" type="MarginContainer" parent="Edit/ConfigPopupPanel/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("4_gr74j")
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Edit/ConfigPopupPanel/TabContainer/Theme"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Dark Mode : "
+
+[node name="CheckBox" type="CheckBox" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Main Color : "
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Main Color"
+edit_alpha = false
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Text Size : "
+
+[node name="FontHSlider" type="HSlider" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 10.0
+max_value = 50.0
+value = 15.0
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+text = "Icon Size : "
+
+[node name="HSlider" type="HSlider" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 5.0
+max_value = 50.0
+value = 20.0
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+text = "UI Scale : "
+
+[node name="UIHSlider" type="HSlider" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 2.0
+step = 0.01
+
+[node name="CheckBox" type="CheckBox" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+text = "Dark mode"
+
+[node name="CheckBox2" type="CheckBox" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+text = "asdfasdfasdf"
+
+[node name="CheckBox3" type="CheckBox" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+text = "asdfasdfasdf"
+
+[node name="CheckBox4" type="CheckBox" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+text = "asdfasdfasdf"
+
+[node name="CheckBox5" type="CheckBox" parent="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer"]
+layout_mode = 2
+text = "asdfasdfasdf"
+
+[node name="Shortcuts" type="VBoxContainer" parent="Edit/ConfigPopupPanel/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="Debug" type="PopupMenu" parent="."]
+auto_translate_mode = 1
+script = ExtResource("2_qa3nb")
+
+[node name="Tools" type="PopupMenu" parent="."]
+auto_translate_mode = 1
+script = ExtResource("2_qa3nb")
+
+[node name="Help" type="PopupMenu" parent="."]
+auto_translate_mode = 1
+script = ExtResource("2_qa3nb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -365.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+placeholder_text = "Enter Text"
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Search"
+
+[connection signal="id_pressed" from="Files" to="Files" method="_on_id_pressed"]
+[connection signal="file_selected" from="Files/FileDialog" to="Files" method="_on_file_dialog_file_selected"]
+[connection signal="id_pressed" from="Edit" to="Edit" method="_on_id_pressed"]
+[connection signal="text_changed" from="Edit/ConfigPopupPanel/TabContainer/Main/VBoxContainer/HBoxContainer/LineEdit" to="Edit/ConfigPopupPanel/TabContainer/Main" method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer2/CheckBox" to="Edit/ConfigPopupPanel/TabContainer/Theme" method="_on_check_box_pressed"]
+[connection signal="value_changed" from="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer4/FontHSlider" to="Edit/ConfigPopupPanel/TabContainer/Theme" method="_on_font_h_slider_value_changed"]
+[connection signal="value_changed" from="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer6/HSlider" to="Edit/ConfigPopupPanel/TabContainer/Theme" method="_on_h_slider_value_changed"]
+[connection signal="value_changed" from="Edit/ConfigPopupPanel/TabContainer/Theme/VBoxContainer/HBoxContainer5/UIHSlider" to="Edit/ConfigPopupPanel/TabContainer/Theme" method="_on_uih_slider_value_changed"]

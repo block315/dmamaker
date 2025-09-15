@@ -72,8 +72,7 @@ func make_tree_item(_tree_stack, parser) -> TreeItem:
 	var _tree_item_button = ImageTexture.new()
 	var _image = Image.new()
 	_tree_item_button.set_image(_image.load_from_file("res://arts/kenney_game-icons/PNG/White/1x/plus.png"))
-	_tree_item_button.set_size_override(Vector2i(20,20))
-	
+	_tree_item_button.set_size_override(Vector2i(ProgramConfig.icon_size,ProgramConfig.icon_size))
 	_tree_item.add_button(0,_tree_item_button)
 	_tree_item.set_text(0, parser.get_attribute_value(0))
 	return _tree_item

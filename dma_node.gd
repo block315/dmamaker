@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 			mouse_selected = false
 			name += (ProgramConfig.index_split_symbol + str(graph.node_index))
 			reparent(graph)
-			position_offset = graph.get_local_mouse_position()
+			position_offset = graph.get_local_mouse_position() + graph.scroll_offset
 		elif Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			queue_free()
 
