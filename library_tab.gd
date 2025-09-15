@@ -9,7 +9,7 @@ var set_stack = {}
 func _ready() -> void:
 	make_tree()
 
-func make_tree(enabled_set:Array[String]=["SetA"]):
+func make_tree(enabled_set:Array[String]=[""]):
 	clear()
 	if enabled_set.size() > 1:
 		var _root = create_item()

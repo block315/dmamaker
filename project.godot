@@ -31,6 +31,8 @@ enabled=PackedStringArray("res://addons/FileAccessWeb/plugin.cfg")
 
 graph=""
 library=""
+rightclickmenu=""
+view3d=""
 nodes=""
 footbar=""
 
