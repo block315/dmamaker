@@ -79,8 +79,11 @@ func dma_parser(parser: XMLParser):
 			else:
 				_dma_node = graph_edit.get_node(_name)
 			if !_xml_stack.is_empty():
-				_dma_node.add_child(Control.new())
-				graph_edit.connect_node(_xml_stack.back(), 0, _name, 0)
+				var _control_for_conn := Label.new()
+				_control_for_conn.text = _connection
+				_dma_node.add_child(_control_for_conn)
+				graph_edit.connect_node(_xml_stack.back(), 0, _name, _control_for_conn.get_index())
+				print("connecting to ", _control_for_conn.get_index())
 			_xml_stack.append(_name)
 		if parser.get_node_type() == XMLParser.NODE_ELEMENT_END \
 			and parser.get_node_name() == "mech":

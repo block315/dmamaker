@@ -15,7 +15,7 @@ func graph_flush():
 			if _graph_node is GraphNode:
 				_graph_node.queue_free()
 
-func node_thumbnail(thumbnail:bool):
+func node_thumbnail(_thumbnail:bool):
 	if get_child_count() > 0:
 		for _graph_node in get_children():
 			if _graph_node is DMANode:
@@ -39,7 +39,7 @@ func _on_delete_nodes_request(nodes: Array[StringName]) -> void:
 		if _graph_node is GraphNode and _graph_node.name in nodes:
 			_graph_node.queue_free()
 
-func save(path: String = "") -> PackedByteArray:
+func save(_path: String = "") -> PackedByteArray:
 	var _xml_nodes = [] # XMLNode
 	var _graph_nodes = [] # GraphNode
 	var xml_list = [] # all xml data in xml file
@@ -50,11 +50,17 @@ func save(path: String = "") -> PackedByteArray:
 	for _graph_node in get_children():
 		if _graph_node is not GraphNode:
 			continue
-		var _xml_node = XMLNode.new()
+		var _xml_node := XMLNode.new()
 		_xml_node.name = "mech"
 		_xml_node.attributes = {"name": _graph_node.name}
 		_xml_nodes.append(_xml_node)
 		_graph_nodes.append(_graph_node)
+		for _graph_node_port in _graph_node.get_children():
+			if _graph_node_port is not Label:
+				continue
+			var _xml_graph_node := XMLNode.new()
+			_xml_node.name = "connections"
+			_xml_node.attributes = {"name": _xml_graph_node.text, "type": 0}
 	
 	for _parent_xml_node in _xml_nodes:
 		for _connection in connections:

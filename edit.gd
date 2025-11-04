@@ -8,7 +8,7 @@ func _ready() -> void:
 	for i in range(item_count):
 		set_item_icon_max_width(i, ProgramConfig.icon_size)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 
