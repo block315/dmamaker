@@ -9,7 +9,7 @@ var set_stack = {}
 func _ready() -> void:
 	make_tree()
 
-func make_tree(enabled_set:Array[String]=[""]):
+func make_tree(_enabled_set:Array[String]=[""]):
 	clear()
 	if enabled_set.size() > 1:
 		var _root = create_item()
@@ -33,6 +33,8 @@ func make_tree(enabled_set:Array[String]=[""]):
 func _on_button_clicked(item: TreeItem, column: int, id: int, mouse_button_index: int) -> void:
 	for _node in %Nodes.get_children():
 		_node.queue_free()
+	if !get_tree().get_first_node_in_group("nodes").visible:
+		get_tree().get_first_node_in_group("nodes").visible = true
 	for _dma in set_stack[item.get_text(0)]:
 		var _node = DMA_NODE.instantiate()
 		_node.name = _dma

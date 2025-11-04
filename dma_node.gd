@@ -24,7 +24,7 @@ func _ready() -> void:
 	add_child(_texture)
 	move_child(_texture, 0)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if mouse_selected:
 		global_position = get_global_mouse_position()
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) \
