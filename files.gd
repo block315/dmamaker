@@ -2,7 +2,7 @@ extends PopupMenu
 class_name FileMenu
 
 @onready var file_dialog: FileDialog = $FileDialog
-@onready var graph_edit: GraphEdit = %GraphEdit
+@onready var graph_edit: GraphEdit = get_tree().get_first_node_in_group("graph")
 @onready var code_edit: CodeEdit = %CodeEdit
 @onready var debug_label: Label = %DebugLabel
 var file_access_web := FileAccessWeb.new()

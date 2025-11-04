@@ -1,13 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://b0g1dnraxs4p1"]
+[gd_scene load_steps=9 format=3 uid="uid://b0g1dnraxs4p1"]
 
 [ext_resource type="Script" uid="uid://0ymfoggx602w" path="res://main.gd" id="1_efxa6"]
 [ext_resource type="Script" uid="uid://yf8r832qo1kl" path="res://library_tab.gd" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://cfsrws2u2qkwy" path="res://menubar/menu_bar.tscn" id="2_7mycd"]
 [ext_resource type="Script" uid="uid://nenqvje52g26" path="res://set_tab.gd" id="4_kek77"]
+[ext_resource type="Script" uid="uid://dfotx33mygj8v" path="res://code_edit.gd" id="7_272bh"]
 [ext_resource type="PackedScene" uid="uid://dpvyp4owh3eqr" path="res://graphedit/graph_edit.tscn" id="8_4c57u"]
 [ext_resource type="PackedScene" uid="uid://emlvgmc8so3a" path="res://3dview/3d_view.tscn" id="10_efxa6"]
 
 [sub_resource type="CodeHighlighter" id="CodeHighlighter_7mycd"]
+number_color = Color(1, 0, 1, 1)
+symbol_color = Color(1, 1, 0, 1)
+function_color = Color(0, 1, 1, 1)
+member_variable_color = Color(0, 1, 0, 1)
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -37,10 +42,11 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.2
-current_tab = 0
+current_tab = 1
 
 [node name="Library" type="Tree" parent="VBoxContainer/HSplitContainer/TabContainer" groups=["library"]]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 script = ExtResource("1_ig7tw")
@@ -48,7 +54,6 @@ metadata/_tab_index = 0
 
 [node name="Set" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/TabContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 script = ExtResource("4_kek77")
 metadata/_tab_index = 1
@@ -60,17 +65,20 @@ size_flags_horizontal = 3
 [node name="TabContainer2" type="TabContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 2
+current_tab = 0
 
 [node name="GraphEdit" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2" instance=ExtResource("8_4c57u")]
 unique_name_in_owner = true
+visible = true
 layout_mode = 2
+scroll_offset = Vector2(0, -30)
 
 [node name="3DView" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2" groups=["view3d"] instance=ExtResource("10_efxa6")]
 visible = false
 layout_mode = 2
 
 [node name="Evolution" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer2"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -138,6 +146,7 @@ current_tab = 0
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+minimap_draw = true
 syntax_highlighter = SubResource("CodeHighlighter_7mycd")
 draw_tabs = true
 draw_spaces = true
@@ -149,7 +158,21 @@ gutters_draw_fold_gutter = true
 code_completion_enabled = true
 auto_brace_completion_enabled = true
 auto_brace_completion_highlight_matching = true
+script = ExtResource("7_272bh")
 metadata/_tab_index = 0
+
+[node name="CopyButton" type="Button" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer/CodeEdit"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -45.0
+offset_top = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Copy"
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer"]
 visible = false
@@ -199,3 +222,4 @@ layout_mode = 2
 text = "Debug Context"
 
 [connection signal="button_clicked" from="VBoxContainer/HSplitContainer/TabContainer/Library" to="VBoxContainer/HSplitContainer/TabContainer/Library" method="_on_button_clicked"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer/CodeEdit/CopyButton" to="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer/CodeEdit" method="_on_copy_button_pressed"]

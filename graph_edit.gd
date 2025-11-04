@@ -82,7 +82,7 @@ func save(path: String = "") -> PackedByteArray:
 			var _xml_node_index = _xml_node.attributes["name"].split(ProgramConfig.index_split_symbol)[1]
 			_xml_node.attributes["name"] = _xml_node.attributes["name"].split(ProgramConfig.index_split_symbol)[0]
 			_xml_node.attributes["index"] = _xml_node_index
-	return '<?xml version="1.0" encoding="UTF-8"?>\n'.to_utf8_buffer() + XML.dump_buffer(xml_doc)
+	return '<?xml version="1.0" encoding="UTF-8"?>\n'.to_utf8_buffer() + XML.dump_buffer(xml_doc,true)
 
 func xmldocuments_to_list(root:XMLNode, xml_list):
 	xml_list.append(root)
