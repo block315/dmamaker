@@ -1,13 +1,14 @@
 extends GraphNode
 class_name DMANode
 
-@export var texture:Texture = preload("res://icon.svg")
-@onready var graph:GraphEdit = get_tree().get_first_node_in_group("graph")
+@export var texture: Texture = preload("res://icon.svg")
+@onready var graph: GraphEdit = get_tree().get_first_node_in_group("graph")
 var mouse_selected: bool = false
+var title_label: Label
 
 func _init() -> void:
-	var _label : Label = get_titlebar_hbox().get_child(0)
-	_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	title_label = get_titlebar_hbox().get_child(0)
+	title_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 
 func _ready() -> void:
 	renamed.connect(_on_renamed)
@@ -38,6 +39,9 @@ func _process(_delta: float) -> void:
 
 func _on_renamed() -> void:
 	title = name
+	var _label_text = title_label.text.split("-",true,2)
+	if _label_text.size() > 1:
+		title_label.text = str(_label_text[0]) + "\n" + str(_label_text[1])
 
 func _on_slot_updated():
 	for i in range(get_input_port_count()+1):

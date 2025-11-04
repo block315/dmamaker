@@ -47,6 +47,8 @@ func save(_path: String = "") -> PackedByteArray:
 
 	xml_doc.root = XMLNode.new()
 	xml_doc.root.name = "dma"
+	
+	## make xml_nodes for dma_nodes in graphedit
 	for _graph_node in get_children():
 		if _graph_node is not GraphNode:
 			continue
@@ -55,26 +57,40 @@ func save(_path: String = "") -> PackedByteArray:
 		_xml_node.attributes = {"name": _graph_node.name}
 		_xml_nodes.append(_xml_node)
 		_graph_nodes.append(_graph_node)
+		## add xml_nodes for connections
 		for _graph_node_port in _graph_node.get_children():
 			if _graph_node_port is not Label:
 				continue
-			var _xml_graph_node := XMLNode.new()
-			_xml_node.name = "connections"
-			_xml_node.attributes = {"name": _xml_graph_node.text, "type": 0}
+			var _xml_port_node := XMLNode.new()
+			_xml_port_node.name = "connection"
+			_xml_port_node.attributes = {"name": _graph_node_port.text, "type": _graph_node.get_output_port_type(_graph_node_port.get_index())}
+			_xml_node.children.append(_xml_port_node)
 	
+	## add child dma_node
 	for _parent_xml_node in _xml_nodes:
 		for _connection in connections:
 			if _parent_xml_node.attributes["name"] == _connection["from_node"]:
 				for _child_xml_node in _xml_nodes:
 					if _child_xml_node.attributes["name"] == _connection["to_node"]:
-						for _parent_graph_node in _graph_nodes:
-							if _parent_graph_node.name == _parent_xml_node.attributes["name"]:
-								var _port_control_node = _parent_graph_node.get_child(_connection["from_port"])
-								if _port_control_node is Label:
-									_child_xml_node.attributes["connection"] = _port_control_node.text
+						for _child_graph_node in _graph_nodes:
+							if _child_graph_node.name == _child_xml_node.attributes["name"]:
+								var _to_port_control_node = _child_graph_node.get_child(_connection["to_port"])
+								if _to_port_control_node is Label:
+									_child_xml_node.attributes["connection"] = _to_port_control_node.text
 								else:
 									_child_xml_node.attributes["connection"] = "default"
-						_parent_xml_node.children.append(_child_xml_node)
+						if _connection["to_port"] == 0:
+							_parent_xml_node.children.append(_child_xml_node)
+						else:
+							_parent_xml_node.children[_connection["from_port"]-1].children.append(_child_xml_node)
+						#for _parent_graph_node in _graph_nodes:
+							#if _parent_graph_node.name == _parent_xml_node.attributes["name"]:
+								#var _from_port_control_node = _parent_graph_node.get_child(_connection["from_port"])
+								#if _from_port_control_node is Label:
+									#_parent_xml_node.children[_connection["from_port"]].append(_child_xml_node)
+								#else:
+									#_child_xml_node.attributes["connection"] = "default"
+
 	for _root_xml_node in _xml_nodes:
 		var _has_parent := false
 		for _connection in connections:
@@ -82,6 +98,7 @@ func save(_path: String = "") -> PackedByteArray:
 				_has_parent = true
 		if !_has_parent:
 			xml_doc.root.children.append(_root_xml_node)
+	
 	xmldocuments_to_list(xml_doc.root, xml_list)
 	for _xml_node in xml_list:
 		if _xml_node.attributes.has("name") and _xml_node.attributes["name"].contains(ProgramConfig.index_split_symbol):

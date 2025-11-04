@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dpvyp4owh3eqr"]
 
-[ext_resource type="Script" uid="uid://cps273hc7ptnh" path="res://graph_edit.gd" id="1_n4gte"]
+[ext_resource type="Script" uid="uid://cps273hc7ptnh" path="res://graphedit/graph_edit.gd" id="1_n4gte"]
 [ext_resource type="Script" uid="uid://bi1oqgucrms8i" path="res://graphedit/right_click_popup_menu.gd" id="3_n65k6"]
 
 [node name="GraphEdit" type="GraphEdit" groups=["graph"]]
