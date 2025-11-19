@@ -142,8 +142,13 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
 current_tab = 0
 
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
 [node name="CodeEdit" type="CodeEdit" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 minimap_draw = true
@@ -159,7 +164,7 @@ code_completion_enabled = true
 auto_brace_completion_enabled = true
 auto_brace_completion_highlight_matching = true
 script = ExtResource("7_272bh")
-metadata/_tab_index = 0
+metadata/_tab_index = 1
 
 [node name="CopyButton" type="Button" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer/CodeEdit"]
 layout_mode = 1
@@ -177,12 +182,12 @@ text = "Copy"
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer"]
 visible = false
 layout_mode = 2
-metadata/_tab_index = 1
+metadata/_tab_index = 2
 
 [node name="Nodes" type="ScrollContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer" groups=["nodes"]]
 visible = false
 layout_mode = 2
-metadata/_tab_index = 2
+metadata/_tab_index = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/TabContainer/Nodes"]
 layout_mode = 2

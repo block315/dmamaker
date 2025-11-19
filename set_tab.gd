@@ -20,5 +20,5 @@ func _ready() -> void:
 		var _set_check_button = SetCheckButton.new()
 		_set_check_button.text = _set
 
-		print(_set)
+		#print(_set)
 		add_child(_set_check_button)

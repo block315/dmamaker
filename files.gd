@@ -61,33 +61,56 @@ func _on_upload_cancelled():
 
 ## make node graph from xml file
 func dma_parser(parser: XMLParser):
-	var _xml_stack = []
-	while parser.read() != ERR_FILE_EOF:
-		if parser.get_node_type() == XMLParser.NODE_ELEMENT \
-		and parser.get_node_name() == "mech":
-			var _dma_node := DMANode.new()
-			var _name = parser.get_named_attribute_value("name")
-			var _index = parser.get_named_attribute_value("index")
-			var _connection = parser.get_named_attribute_value("connection")
-			_dma_node.resizable = true
-			if graph_edit.get_node_or_null(_name) != null:
-				continue
-			_name += (ProgramConfig.index_split_symbol + _index)
-			if !graph_edit.get_node(_name):
-				_dma_node.name = _name
-				graph_edit.add_child(_dma_node)
-			else:
-				_dma_node = graph_edit.get_node(_name)
-			if !_xml_stack.is_empty():
-				var _control_for_conn := Label.new()
-				_control_for_conn.text = _connection
-				_dma_node.add_child(_control_for_conn)
-				graph_edit.connect_node(_xml_stack.back(), 0, _name, _control_for_conn.get_index())
-				print("connecting to ", _control_for_conn.get_index())
-			_xml_stack.append(_name)
-		if parser.get_node_type() == XMLParser.NODE_ELEMENT_END \
-			and parser.get_node_name() == "mech":
-			_xml_stack.pop_back()
+	#var _xml_stack = []
+	#var _node_stack = []
+	#while parser.read() != ERR_FILE_EOF:
+		## make dma_node and xml_stack
+		#if parser.get_node_type() == XMLParser.NODE_ELEMENT \
+			#and parser.get_node_name() == "mech":
+			#var _dma_node := DMANode.new()
+			#var _name = parser.get_named_attribute_value("name")
+			#var _index = parser.get_named_attribute_value("index")
+			#var _connection = parser.get_named_attribute_value("connection")
+			#_dma_node.resizable = true
+			#if graph_edit.get_node_or_null(_name) != null:
+				#continue
+			#_name += (ProgramConfig.index_split_symbol + _index)
+			#if !graph_edit.get_node(_name):
+				#_dma_node.name = _name
+				#graph_edit.add_child(_dma_node)
+			#else:
+				#_dma_node = graph_edit.get_node(_name)
+			#if !_xml_stack.is_empty():
+				##var _control_for_conn := Label.new()
+				##_control_for_conn.text = _connection
+				##_dma_node.add_child(_control_for_conn)
+				#graph_edit.connect_node(_xml_stack.back(), 0, _name, 0)
+				##print("connecting to ", _control_for_conn.get_index())
+			#_xml_stack.append(_name)
+			#_node_stack.append(_dma_node)
+		## add ports to dma_node
+		#if parser.get_node_type() == XMLParser.NODE_ELEMENT \
+			#and parser.get_node_name() == "connection":
+			#var _connection_name = parser.get_named_attribute_value("name")
+			#var _connection_type = parser.get_named_attribute_value("type")
+			#var _control_for_conn := Label.new()
+			#var already_created :bool = false
+			#var _dma_node_for_port: DMANode = _node_stack.back()
+			#for _port in _node_stack.back().get_children():
+				#if _port is Label and _port.name == _connection_name:
+					#already_created = true
+			#if !already_created:
+				#_control_for_conn.text = _connection_name
+				#_dma_node_for_port.add_child(_control_for_conn)
+				#_dma_node_for_port.set_slot_type_left(_control_for_conn.get_index(), int(_connection_type))
+				#_dma_node_for_port.set_slot_enabled_left(_control_for_conn.get_index(), true)
+				#_dma_node_for_port.set_slot_type_right(_control_for_conn.get_index(), int(_connection_type))
+				#_dma_node_for_port.set_slot_enabled_right(_control_for_conn.get_index(), true)
+		#if parser.get_node_type() == XMLParser.NODE_ELEMENT_END \
+			#and parser.get_node_name() == "mech":
+			#_xml_stack.pop_back()
+			#_node_stack.pop_back()
+		DMA.parser_to_node(parser)
 		graph_edit.arrange_nodes()
 
 ## for desktop import & export

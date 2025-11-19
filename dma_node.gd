@@ -5,6 +5,7 @@ class_name DMANode
 @onready var graph: GraphEdit = get_tree().get_first_node_in_group("graph")
 var mouse_selected: bool = false
 var title_label: Label
+var description: String
 
 func _init() -> void:
 	title_label = get_titlebar_hbox().get_child(0)
@@ -44,8 +45,9 @@ func _on_renamed() -> void:
 		title_label.text = str(_label_text[0]) + "\n" + str(_label_text[1])
 
 func _on_slot_updated():
-	for i in range(get_input_port_count()+1):
-		set_slot_enabled_left(i,true)
+	set_slot_enabled_left(0, true)
+	for i in range(1, get_input_port_count()+1):
+		set_slot_enabled_left(i, false)
 	for i in range(get_output_port_count()+1):
 		set_slot_enabled_right(i, true)
 

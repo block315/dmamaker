@@ -62,24 +62,22 @@ func save(_path: String = "") -> PackedByteArray:
 			if _graph_node_port is not Label:
 				continue
 			var _xml_port_node := XMLNode.new()
-			_xml_port_node.name = "connection"
+			_xml_port_node.name = "conn"
 			_xml_port_node.attributes = {"name": _graph_node_port.text, "type": _graph_node.get_output_port_type(_graph_node_port.get_index())}
 			_xml_node.children.append(_xml_port_node)
 	
 	## add child dma_node
-	for _parent_xml_node in _xml_nodes:
+	for _parent_xml_node: XMLNode in _xml_nodes:
 		for _connection in connections:
 			if _parent_xml_node.attributes["name"] == _connection["from_node"]:
-				for _child_xml_node in _xml_nodes:
+				for _child_xml_node: XMLNode in _xml_nodes:
 					if _child_xml_node.attributes["name"] == _connection["to_node"]:
-						for _child_graph_node in _graph_nodes:
-							if _child_graph_node.name == _child_xml_node.attributes["name"]:
-								var _to_port_control_node = _child_graph_node.get_child(_connection["to_port"])
-								if _to_port_control_node is Label:
-									_child_xml_node.attributes["connection"] = _to_port_control_node.text
-								else:
-									_child_xml_node.attributes["connection"] = "default"
-						if _connection["to_port"] == 0:
+						#for _child_graph_node in _graph_nodes:
+							#if _child_graph_node.name == _child_xml_node.attributes["name"]:
+								#var _to_port_control_node = _child_graph_node.get_child(_connection["from_port"])
+								#if _to_port_control_node is Label:
+									#_child_xml_node.content = _to_port_control_node.text
+						if _connection["from_port"] == 0:
 							_parent_xml_node.children.append(_child_xml_node)
 						else:
 							_parent_xml_node.children[_connection["from_port"]-1].children.append(_child_xml_node)
@@ -106,6 +104,9 @@ func save(_path: String = "") -> PackedByteArray:
 			_xml_node.attributes["name"] = _xml_node.attributes["name"].split(ProgramConfig.index_split_symbol)[0]
 			_xml_node.attributes["index"] = _xml_node_index
 	return '<?xml version="1.0" encoding="UTF-8"?>\n'.to_utf8_buffer() + XML.dump_buffer(xml_doc,true)
+
+func load_dma(_path:String = ""):
+	pass
 
 func xmldocuments_to_list(root:XMLNode, xml_list):
 	xml_list.append(root)

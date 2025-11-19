@@ -36,24 +36,26 @@ func _on_button_clicked(item: TreeItem, column: int, id: int, mouse_button_index
 	if !get_tree().get_first_node_in_group("nodes").visible:
 		get_tree().get_first_node_in_group("nodes").visible = true
 	for _dma in set_stack[item.get_text(0)]:
-		var _node = DMA_NODE.instantiate()
+		var _node: DMANode = DMA_NODE.instantiate()
 		_node.name = _dma
 		var connection_index = 1
-		_node.set_slot(0, true, 0, Color8(rand_from_seed(0)[0]%256, \
-			rand_from_seed(0)[0]/1000000%256,rand_from_seed(0)[0]/1000%256), \
-			true, 0, Color8(rand_from_seed(0)[0]%256, \
-			rand_from_seed(0)[0]/1000000%256,rand_from_seed(0)[0]/1000%256))
+		#_node.set_slot(0, true, 0, Color8(rand_from_seed(0)[0]%256, \
+			#rand_from_seed(0)[0]/1000000%256,rand_from_seed(0)[0]/1000%256), \
+			#true, 0, Color8(rand_from_seed(0)[0]%256, \
+			#rand_from_seed(0)[0]/1000000%256,rand_from_seed(0)[0]/1000%256))
+		_node.set_slot(0, true, 0, Color("White"), \
+			true, 0, Color("White"))
 		for _connection in set_stack[_dma]:
-			var connection_type = int(_connection[1])
-			var _connection_color = Color8(rand_from_seed(connection_type)[0]%256, \
-rand_from_seed(connection_type)[0]/1000000%256,rand_from_seed(connection_type)[0]/1000%256)
+			#var connection_type = int(_connection[1])
+			#var _connection_color = Color8(rand_from_seed(connection_type)[0]%256, \
+#rand_from_seed(connection_type)[0]/1000000%256,rand_from_seed(connection_type)[0]/1000%256)
 			#print("adding port color ", _connection_color)
 			var _port = Label.new()
 			_port.text = _connection[0]
 			_port.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 			_node.add_child(_port)
-			_node.set_slot(connection_index, true, connection_type, _connection_color, \
-				true, connection_type, _connection_color)
+			_node.set_slot(connection_index, false, 0, Color("Blue"), \
+				true, 0, Color("Blue"))
 			connection_index += 1
 		%Nodes.add_child(_node)
 
