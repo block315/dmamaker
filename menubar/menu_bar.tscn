@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://cfsrws2u2qkwy"]
 
-[ext_resource type="Script" uid="uid://3wdx0aprs4jx" path="res://files.gd" id="1_5jewf"]
-[ext_resource type="Script" uid="uid://chikp128ojfen" path="res://edit.gd" id="2_qa3nb"]
-[ext_resource type="Script" uid="uid://d5psjmwmoiw7" path="res://main_config_tab.gd" id="3_wms42"]
+[ext_resource type="Script" uid="uid://3wdx0aprs4jx" path="res://menubar/files.gd" id="1_5jewf"]
+[ext_resource type="Script" path="res://menubar/edit.gd" id="2_qa3nb"]
+[ext_resource type="Script" uid="uid://d5psjmwmoiw7" path="res://menubar/main_config_tab.gd" id="3_wms42"]
 [ext_resource type="Script" uid="uid://bn64vqo3vhm85" path="res://theme_config_tab.gd" id="4_gr74j"]
 
 [node name="MenuBar" type="MenuBar"]
@@ -11,9 +11,11 @@ flat = true
 [node name="Files" type="PopupMenu" parent="."]
 auto_translate_mode = 1
 script = ExtResource("1_5jewf")
+save_file_path_for_web = null
 
 [node name="FileDialog" type="FileDialog" parent="Files"]
 auto_translate_mode = 1
+oversampling_override = 1.0
 title = "Open a File"
 initial_position = 2
 size = Vector2i(686, 360)
@@ -21,7 +23,7 @@ ok_button_text = "Open"
 dialog_hide_on_ok = true
 file_mode = 0
 access = 2
-filters = PackedStringArray("*.dma")
+filters = PackedStringArray("*.dma", "*.urdf")
 
 [node name="Edit" type="PopupMenu" parent="."]
 auto_translate_mode = 1

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://emlvgmc8so3a"]
 
-[ext_resource type="Script" uid="uid://crr3j6pugy8ob" path="res://3d_view.gd" id="1_ehtsb"]
-[ext_resource type="Script" uid="uid://chnb2o0eg1i0k" path="res://camera_3d.gd" id="2_j26tx"]
+[ext_resource type="Script" uid="uid://crr3j6pugy8ob" path="res://3dview/3d_view.gd" id="1_ehtsb"]
+[ext_resource type="Script" uid="uid://chnb2o0eg1i0k" path="res://3dview/camera_3d.gd" id="2_j26tx"]
 [ext_resource type="PackedScene" uid="uid://dxvgrui20eisx" path="res://testbed/empty.tscn" id="3_dmwj8"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_ehtsb"]

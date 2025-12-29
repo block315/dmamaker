@@ -3,6 +3,7 @@ class_name DMANode
 
 @export var texture: Texture = preload("res://icon.svg")
 @onready var graph: GraphEdit = get_tree().get_first_node_in_group("graph")
+@onready var text_edit: TextEdit = get_tree().get_first_node_in_group("textedit")
 var mouse_selected: bool = false
 var title_label: Label
 var description: String
@@ -14,6 +15,8 @@ func _init() -> void:
 func _ready() -> void:
 	renamed.connect(_on_renamed)
 	slot_updated.connect(_on_slot_updated)
+	node_selected.connect(_on_node_selected)
+	node_deselected.connect(_on_node_deselected)
 	_on_renamed()
 	_on_slot_updated()
 	custom_minimum_size = Vector2(100,100)
@@ -57,3 +60,11 @@ func _on_gui_input(event: InputEvent) -> void:
 			var _new_node = duplicate()
 			_new_node.mouse_selected = true
 			get_tree().get_root().add_child(_new_node)
+
+func _on_node_selected() -> void:
+	text_edit.text = description
+	print("Node selected : ", description)
+
+func _on_node_deselected() -> void:
+	if text_edit.text != null:
+		description = text_edit.text

@@ -9,4 +9,6 @@ resizable = true
 script = ExtResource("1_5g1mi")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="node_deselected" from="." to="." method="_on_node_deselected"]
+[connection signal="node_selected" from="." to="." method="_on_node_selected"]
 [connection signal="renamed" from="." to="." method="_on_renamed"]
