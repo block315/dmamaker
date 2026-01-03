@@ -72,4 +72,7 @@ func _on_file_dialog_file_selected(path: String) -> void:
 			URDF.parser_to_node(parser)
 			graph_edit.arrange_nodes()
 	elif file_dialog.file_mode == FileDialog.FILE_MODE_SAVE_FILE:
-		FileAccess.open(path, FileAccess.WRITE).store_string(graph_edit.save(path).get_string_from_utf8())
+		if path.ends_with(".dma"):
+			FileAccess.open(path, FileAccess.WRITE).store_string(graph_edit.save_to_dma(path).get_string_from_utf8())
+		elif path.ends_with(".urdf"):
+			FileAccess.open(path, FileAccess.WRITE).store_string(graph_edit.save_to_urdf(path).get_string_from_utf8())

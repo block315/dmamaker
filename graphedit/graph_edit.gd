@@ -39,79 +39,78 @@ func _on_delete_nodes_request(nodes: Array[StringName]) -> void:
 		if _graph_node is GraphNode and _graph_node.name in nodes:
 			_graph_node.queue_free()
 
-func save(_path: String = "") -> PackedByteArray:
-	var _xml_nodes = [] # XMLNode
-	var _graph_nodes = [] # GraphNode
-	var xml_list = [] # all xml data in xml file
-	var xml_doc = XMLDocument.new()
+func save_to_dma(_path: String = "") -> PackedByteArray:
+	return DMA.node_to_string(_path)
+	#var _xml_nodes = [] # XMLNode
+	#var _graph_nodes = [] # GraphNode
+	#var xml_list = [] # all xml data in xml file
+	#var xml_doc = XMLDocument.new()
+#
+	#xml_doc.root = XMLNode.new()
+	#xml_doc.root.name = "dma"
+	#
+	### make xml_nodes for dma_nodes in graphedit
+	#for _graph_node in get_children():
+		#if _graph_node is not GraphNode:
+			#continue
+		#var _xml_node := XMLNode.new()
+		#_xml_node.name = "mech"
+		#_xml_node.attributes = {"name": _graph_node.name}
+		#_xml_nodes.append(_xml_node)
+		#_graph_nodes.append(_graph_node)
+		### add xml_nodes for connections
+		#for _graph_node_port in _graph_node.get_children():
+			#if _graph_node_port is not Label:
+				#continue
+			#var _xml_port_node := XMLNode.new()
+			#_xml_port_node.name = "conn"
+			#_xml_port_node.attributes = {"name": _graph_node_port.text, "type": _graph_node.get_output_port_type(_graph_node_port.get_index())}
+			#_xml_node.children.append(_xml_port_node)
+	#
+	### add child dma_node
+	#for _parent_xml_node: XMLNode in _xml_nodes:
+		#for _connection in connections:
+			#if _parent_xml_node.attributes["name"] == _connection["from_node"]:
+				#for _child_xml_node: XMLNode in _xml_nodes:
+					#if _child_xml_node.attributes["name"] == _connection["to_node"]:
+						##for _child_graph_node in _graph_nodes:
+							##if _child_graph_node.name == _child_xml_node.attributes["name"]:
+								##var _to_port_control_node = _child_graph_node.get_child(_connection["from_port"])
+								##if _to_port_control_node is Label:
+									##_child_xml_node.content = _to_port_control_node.text
+						#if _connection["from_port"] == 0:
+							#_parent_xml_node.children.append(_child_xml_node)
+						#else:
+							#_parent_xml_node.children[_connection["from_port"]-1].children.append(_child_xml_node)
+						##for _parent_graph_node in _graph_nodes:
+							##if _parent_graph_node.name == _parent_xml_node.attributes["name"]:
+								##var _from_port_control_node = _parent_graph_node.get_child(_connection["from_port"])
+								##if _from_port_control_node is Label:
+									##_parent_xml_node.children[_connection["from_port"]].append(_child_xml_node)
+								##else:
+									##_child_xml_node.attributes["connection"] = "default"
+#
+	#for _root_xml_node in _xml_nodes:
+		#var _has_parent := false
+		#for _connection in connections:
+			#if _root_xml_node.attributes["name"] == _connection["to_node"]:
+				#_has_parent = true
+		#if !_has_parent:
+			#xml_doc.root.children.append(_root_xml_node)
+	#
+	#xmldocuments_to_list(xml_doc.root, xml_list)
+	#for _xml_node in xml_list:
+		#if _xml_node.attributes.has("name") and _xml_node.attributes["name"].contains(ProgramConfig.index_split_symbol):
+			#var _xml_node_index = _xml_node.attributes["name"].split(ProgramConfig.index_split_symbol)[1]
+			#_xml_node.attributes["name"] = _xml_node.attributes["name"].split(ProgramConfig.index_split_symbol)[0]
+			#_xml_node.attributes["index"] = _xml_node_index
+	#return '<?xml version="1.0" encoding="UTF-8"?>\n'.to_utf8_buffer() + XML.dump_buffer(xml_doc,true)
 
-	xml_doc.root = XMLNode.new()
-	xml_doc.root.name = "dma"
-	
-	## make xml_nodes for dma_nodes in graphedit
-	for _graph_node in get_children():
-		if _graph_node is not GraphNode:
-			continue
-		var _xml_node := XMLNode.new()
-		_xml_node.name = "mech"
-		_xml_node.attributes = {"name": _graph_node.name}
-		_xml_nodes.append(_xml_node)
-		_graph_nodes.append(_graph_node)
-		## add xml_nodes for connections
-		for _graph_node_port in _graph_node.get_children():
-			if _graph_node_port is not Label:
-				continue
-			var _xml_port_node := XMLNode.new()
-			_xml_port_node.name = "conn"
-			_xml_port_node.attributes = {"name": _graph_node_port.text, "type": _graph_node.get_output_port_type(_graph_node_port.get_index())}
-			_xml_node.children.append(_xml_port_node)
-	
-	## add child dma_node
-	for _parent_xml_node: XMLNode in _xml_nodes:
-		for _connection in connections:
-			if _parent_xml_node.attributes["name"] == _connection["from_node"]:
-				for _child_xml_node: XMLNode in _xml_nodes:
-					if _child_xml_node.attributes["name"] == _connection["to_node"]:
-						#for _child_graph_node in _graph_nodes:
-							#if _child_graph_node.name == _child_xml_node.attributes["name"]:
-								#var _to_port_control_node = _child_graph_node.get_child(_connection["from_port"])
-								#if _to_port_control_node is Label:
-									#_child_xml_node.content = _to_port_control_node.text
-						if _connection["from_port"] == 0:
-							_parent_xml_node.children.append(_child_xml_node)
-						else:
-							_parent_xml_node.children[_connection["from_port"]-1].children.append(_child_xml_node)
-						#for _parent_graph_node in _graph_nodes:
-							#if _parent_graph_node.name == _parent_xml_node.attributes["name"]:
-								#var _from_port_control_node = _parent_graph_node.get_child(_connection["from_port"])
-								#if _from_port_control_node is Label:
-									#_parent_xml_node.children[_connection["from_port"]].append(_child_xml_node)
-								#else:
-									#_child_xml_node.attributes["connection"] = "default"
-
-	for _root_xml_node in _xml_nodes:
-		var _has_parent := false
-		for _connection in connections:
-			if _root_xml_node.attributes["name"] == _connection["to_node"]:
-				_has_parent = true
-		if !_has_parent:
-			xml_doc.root.children.append(_root_xml_node)
-	
-	xmldocuments_to_list(xml_doc.root, xml_list)
-	for _xml_node in xml_list:
-		if _xml_node.attributes.has("name") and _xml_node.attributes["name"].contains(ProgramConfig.index_split_symbol):
-			var _xml_node_index = _xml_node.attributes["name"].split(ProgramConfig.index_split_symbol)[1]
-			_xml_node.attributes["name"] = _xml_node.attributes["name"].split(ProgramConfig.index_split_symbol)[0]
-			_xml_node.attributes["index"] = _xml_node_index
-	return '<?xml version="1.0" encoding="UTF-8"?>\n'.to_utf8_buffer() + XML.dump_buffer(xml_doc,true)
+func save_to_urdf(_path: String = "") -> PackedByteArray:
+	return URDF.node_to_string(_path)
 
 func load_dma(_path:String = ""):
 	pass
-
-func xmldocuments_to_list(root:XMLNode, xml_list):
-	xml_list.append(root)
-	for _child_node in root.children:
-		xmldocuments_to_list(_child_node, xml_list)
 
 func _on_child_order_changed() -> void:
 	node_index = get_child_count() - 1
