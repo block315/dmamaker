@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://crr3j6pugy8ob" path="res://3dview/3d_view.gd" id="1_ehtsb"]
 [ext_resource type="Script" uid="uid://chnb2o0eg1i0k" path="res://3dview/camera_3d.gd" id="2_j26tx"]
-[ext_resource type="PackedScene" uid="uid://dxvgrui20eisx" path="res://testbed/empty.tscn" id="3_dmwj8"]
+[ext_resource type="PackedScene" uid="uid://shqd0il2gpjb" path="res://testbed/plane.tscn" id="3_ehtsb"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_ehtsb"]
 device = -1
@@ -52,7 +52,7 @@ color = Color(1, 0, 0, 1)
 
 [node name="TestBed" type="Node3D" parent="SubViewport"]
 
-[node name="Empty" parent="SubViewport/TestBed" instance=ExtResource("3_dmwj8")]
+[node name="Plane" parent="SubViewport/TestBed" instance=ExtResource("3_ehtsb")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -63,7 +63,7 @@ text = "Testbed : "
 
 [node name="OptionButton" type="OptionButton" parent="HBoxContainer"]
 layout_mode = 2
-selected = 0
+selected = 1
 item_count = 2
 popup/item_0/text = "Empty"
 popup/item_0/id = 0
