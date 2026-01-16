@@ -84,7 +84,7 @@ func _on_focus_entered() -> void:
 func _on_focus_exited() -> void:
 	control_focus = false
 
-func bubble():
+func bubble(random_position:bool=false):
 	var _body = RigidBody3D.new()
 	var _body_visual = CSGSphere3D.new()
 	var _collision = CollisionShape3D.new()
@@ -93,6 +93,8 @@ func bubble():
 	_body.add_child(_body_visual)
 	_body.add_child(_collision)
 	_body.freeze = true
+	if random_position:
+		_body.position = Vector3(randi_range(-5,5), randi_range(-5,5), randi_range(-5,5))
 	return _body
 
 func _on_bubble_timer_timeout() -> void:

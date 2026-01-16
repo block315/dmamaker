@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dxvgrui20eisx" path="res://testbed/empty.tscn" id="1_ax1ml"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ax1ml"]
-size = Vector2(10, 10)
+size = Vector2(1, 1)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ax1ml"]
 data = PackedVector3Array(5, 0, 5, -5, 0, 5, 5, 0, -5, -5, 0, 5, -5, 0, -5, 5, 0, -5)

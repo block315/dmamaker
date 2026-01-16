@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfsrws2u2qkwy"]
+[gd_scene load_steps=7 format=3 uid="uid://cfsrws2u2qkwy"]
 
 [ext_resource type="Script" uid="uid://3wdx0aprs4jx" path="res://menubar/files.gd" id="1_5jewf"]
-[ext_resource type="Script" path="res://menubar/edit.gd" id="2_qa3nb"]
+[ext_resource type="Script" uid="uid://chikp128ojfen" path="res://menubar/edit.gd" id="2_qa3nb"]
 [ext_resource type="Script" uid="uid://d5psjmwmoiw7" path="res://menubar/main_config_tab.gd" id="3_wms42"]
 [ext_resource type="Script" uid="uid://bn64vqo3vhm85" path="res://theme_config_tab.gd" id="4_gr74j"]
+[ext_resource type="Script" uid="uid://b8c2vbd4bfrwl" path="res://menubar/help.gd" id="5_qa3nb"]
+[ext_resource type="Script" uid="uid://b7wh2qxbdnfr1" path="res://menubar/tools.gd" id="5_wms42"]
 
 [node name="MenuBar" type="MenuBar"]
 flat = true
@@ -206,11 +208,11 @@ script = ExtResource("2_qa3nb")
 
 [node name="Tools" type="PopupMenu" parent="."]
 auto_translate_mode = 1
-script = ExtResource("2_qa3nb")
+script = ExtResource("5_wms42")
 
 [node name="Help" type="PopupMenu" parent="."]
 auto_translate_mode = 1
-script = ExtResource("2_qa3nb")
+script = ExtResource("5_qa3nb")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1

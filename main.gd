@@ -4,10 +4,6 @@ extends Control
 @onready var node_to_rightclick = self
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
 #func _process(delta: float) -> void:
 	#node_to_rightclick = get_viewport().gui_get_focus_owner()
 	#print(node_to_rightclick)

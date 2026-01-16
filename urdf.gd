@@ -51,7 +51,7 @@ func node_to_string(_path: String = "") -> PackedByteArray:
 	var _xml_nodes = [] # XMLNode
 	var _graph_nodes = [] # GraphNode
 	var xml_doc = XMLDocument.new()
-
+	
 	xml_doc.root = XMLNode.new()
 	xml_doc.root.name = "robot"
 	xml_doc.root.attributes = {"name": "visual"}
@@ -86,5 +86,5 @@ func node_to_string(_path: String = "") -> PackedByteArray:
 		_xml_joint_node.children.append(_xml_joint_parent_node)
 		_xml_joint_node.children.append(_xml_joint_child_node)
 		xml_doc.root.children.append(_xml_joint_node)
-
+	
 	return '<?xml version="1.0" encoding="UTF-8"?>\n'.to_utf8_buffer() + XML.dump_buffer(xml_doc,true)
