@@ -19,14 +19,14 @@ func make_tree(_enabled_set:Array[String]=[""]):
 		var _tree_stack = []
 		while parser.read() != ERR_FILE_EOF:
 			if parser.get_node_type() == XMLParser.NODE_ELEMENT:
-				if parser.get_node_name() == "connection":
-					set_stack[_tree_stack.back().get_text(0)].append([parser.get_attribute_value(0), parser.get_attribute_value(1)])
+				if parser.get_node_name() == "conn":
+					#set_stack[_tree_stack.back().get_text(0)].append([parser.get_attribute_value(0), parser.get_attribute_value(1)])
 					continue
 				var _tree_item = make_tree_item(_tree_stack, parser)
 				update_set_stack(parser, _tree_stack)
 				_tree_stack.append(_tree_item)
 			if parser.get_node_type() == XMLParser.NODE_ELEMENT_END:
-				if parser.get_node_name() == "connection":
+				if parser.get_node_name() == "conn":
 					continue
 				_tree_stack.pop_back()
 

@@ -15,10 +15,8 @@ func _ready() -> void:
 		var set_dir = DirAccess.open("library/set")
 		mech_set_index_data = []
 		for _files in set_dir.get_files():
-			mech_set_index_data.append(_files.rstrip(".dmaset"))
+			mech_set_index_data.append(_files.trim_suffix(".dmaset"))
 	for _set in mech_set_index_data:
 		var _set_check_button = SetCheckButton.new()
 		_set_check_button.text = _set
-
-		#print(_set)
 		add_child(_set_check_button)
